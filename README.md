@@ -1,1 +1,1 @@
-# The Augmented Reality Phamasist (TARP)
+# The Augmented Reality Pharmacist (TARP)
