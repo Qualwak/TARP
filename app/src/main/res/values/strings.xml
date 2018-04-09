@@ -1,0 +1,7 @@
+<resources>
+    <string name="app_name">LabTestTask1</string>
+    <string name="no_text">No Text</string>
+    <string name="text_activityTwo">THIS IS ACTIVITY TWO</string>
+    <string name="search">Search:</string>
+    <string name="search_text">Search:</string>
+</resources>
