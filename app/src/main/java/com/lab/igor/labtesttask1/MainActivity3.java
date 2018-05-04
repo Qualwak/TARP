@@ -48,7 +48,19 @@ public class MainActivity3 extends AppCompatActivity {
         materialSearchBar = (MaterialSearchBar) findViewById(R.id.search_bar);
         textView2 = (TextView) findViewById(R.id.text_found);
 
-        textView2.setText(getIntent().getStringExtra("info"));
+
+        Intent intent = getIntent();
+        String test_cut = intent.getStringExtra("text_view");
+        String final_cut = "";
+        for (int i = 0; i < test_cut.length(); i++) {
+            if (test_cut.charAt(i) != ' ' || test_cut.charAt(i) != '\n') {
+                final_cut += test_cut.charAt(i);
+            } else break;
+        }
+        final_cut = final_cut.split("\n")[0];
+
+        textView2.setText(final_cut.substring(0, final_cut.length() - 1));
+
         Log.v(TAG, textView2.getText().toString());
         // init DB
         databaseHelper = new DatabaseHelper(this);

@@ -14,6 +14,7 @@ import java.util.List;
 
 /**
  * Created by Igor on 06-Apr-18.
+ * With help of this Class we can get needed list with drug names, descriptions, interactions.
  */
 
 public class DatabaseHelper extends SQLiteAssetHelper {
@@ -26,7 +27,7 @@ public class DatabaseHelper extends SQLiteAssetHelper {
         super(context, DB_NAME, null, DB_VER);
     }
 
-    // function that gets all friends
+    // function that gets all drugs from database
     public List<Drug> getDrug() {
 
         SQLiteDatabase db = getReadableDatabase();
@@ -60,8 +61,9 @@ public class DatabaseHelper extends SQLiteAssetHelper {
         return result;
     }
 
-    //function that gets all friend's name
+    //function that gets all drugs's name
     public List<String> getNames() {
+        // creating SQLiteDatabase object
         SQLiteDatabase db = getReadableDatabase();
         SQLiteQueryBuilder qb = new SQLiteQueryBuilder();
 
@@ -106,9 +108,9 @@ public class DatabaseHelper extends SQLiteAssetHelper {
 
             do {
                 DrugInteraction drugInteraction = new DrugInteraction();
-                drugInteraction.setDrugName(cursor.getString(cursor.getColumnIndex("drug_name")));
+                //drugInteraction.setDrugName(cursor.getString(cursor.getColumnIndex("drug_name")));
                 drugInteraction.setName(cursor.getString(cursor.getColumnIndex("name")));
-                drugInteraction.setDescription(cursor.getString(cursor.getColumnIndex("description")));
+                //drugInteraction.setDescription(cursor.getString(cursor.getColumnIndex("description")));
 
 
 
@@ -120,7 +122,7 @@ public class DatabaseHelper extends SQLiteAssetHelper {
     }
 
 
-    //function gets friends by name
+    //function gets drugs by name
     public List<Drug> getDrugsByName(String name) {
         SQLiteDatabase db = getReadableDatabase();
         SQLiteQueryBuilder qb = new SQLiteQueryBuilder();
@@ -129,17 +131,16 @@ public class DatabaseHelper extends SQLiteAssetHelper {
         String[] sqlSelect = {"id, name, description, type"};
         String tableName = "drugs"; // name of the table in your database;
 
+        //set name of table from which we need to get information
         qb.setTables(tableName);
 
-        //This will be like query: select * from FRIENDs WHERE Name LIKE %pattern%
-        //if you want to get extract name, just change
-        //Cursor cursor = qb.query(db, sqlSelect, "Name = ?", new String[] {name}, null, null, null);
+        //
         Cursor cursor = qb.query(db, sqlSelect, "Name LIKE ?", new String[] {"%"+name+"%"}, null, null, null);
 
         List<Drug> result = new ArrayList<Drug>();
 
         if (cursor.moveToFirst()) {
-
+            //adding names that we need to our list
             do {
                 Drug drug = new Drug();
                 drug.setId(cursor.getInt(cursor.getColumnIndex("id")));

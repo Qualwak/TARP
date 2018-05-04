@@ -1,5 +1,6 @@
 package com.lab.igor.labtesttask1;
 
+import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
@@ -21,12 +22,16 @@ import java.util.List;
 
 
 public class Main4Activity extends AppCompatActivity {
+
     private static final String TAG = "MyApp";
+
     RecyclerView recyclerView;
     RecyclerView.LayoutManager layoutManager;
     SearchAdapter1 adapter;
     TextView textView2;
+    TextView textView3;
 
+    // adding Material Search bar
     MaterialSearchBar materialSearchBar;
     List<String> suggestList = new ArrayList<String>();
 
@@ -37,6 +42,7 @@ public class Main4Activity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main4);
         recyclerView = (RecyclerView) findViewById(R.id.recycler_search);
+
         layoutManager = new LinearLayoutManager(this);
         recyclerView.setLayoutManager(layoutManager);
         recyclerView.setHasFixedSize(true);
@@ -45,9 +51,18 @@ public class Main4Activity extends AppCompatActivity {
 
 
         textView2 = (TextView) findViewById(R.id.text_found);
+        textView3 = (TextView) findViewById(R.id.number_of_interactions);
+        // cutting and deleting text that we do not use
+        Intent intent = getIntent();
+        String test_cut = intent.getStringExtra("text_view");
+        String final_cut = "";
+        for (int i = 0; i < test_cut.length(); i++) {
+            if (test_cut.charAt(i) != ' ') {
+                final_cut += test_cut.charAt(i);
+            } else break;
+        }
 
-        textView2.setText(getIntent().getStringExtra("info"));
-
+        textView2.setText(final_cut.substring(0, final_cut.length() - 1));
         // init DB
         databaseHelper = new DatabaseHelper(this);
 
@@ -107,14 +122,16 @@ public class Main4Activity extends AppCompatActivity {
         recyclerView.setAdapter(adapter);
         int i = adapter.getItemCount();
         String elems = Integer.toString(i);
-        Log.i(TAG, elems);
+        textView3.setText(elems + " interactions with " + textView2.getText());
     }
 
+    //keep search view
     private void startSearch(String text) {
         adapter = new SearchAdapter1(this, databaseHelper.getDrugInteractions(text));
         recyclerView.setAdapter(adapter);
     }
 
+    //loading list
     private void loadSuggestList() {
         suggestList = databaseHelper.getNames();
         materialSearchBar.setLastSuggestions(suggestList);

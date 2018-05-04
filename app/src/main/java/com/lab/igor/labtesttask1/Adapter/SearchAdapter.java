@@ -15,6 +15,7 @@ import java.util.List;
 
 /**
  * Created by Igor on 06-Apr-18.
+ * For search field
  */
 
 class SearchViewHolder extends RecyclerView.ViewHolder {
@@ -23,6 +24,7 @@ class SearchViewHolder extends RecyclerView.ViewHolder {
 
     public SearchViewHolder(View itemView) {
         super(itemView);
+        // connect our fields in design with Model's fields
         name = (TextView) itemView.findViewById(R.id.name);
         description = (TextView) itemView.findViewById(R.id.description);
         type = (TextView) itemView.findViewById(R.id.type);
@@ -44,6 +46,7 @@ public class SearchAdapter extends RecyclerView.Adapter<SearchViewHolder> {
 
 
 
+    // list Of searched items
     @Override
     public SearchViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         LayoutInflater inflater = LayoutInflater.from(parent.getContext());

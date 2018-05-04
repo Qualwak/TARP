@@ -2,6 +2,7 @@ package com.lab.igor.labtesttask1.Model;
 
 /**
  * Created by Igor on 09-Apr-18.
+ * Drug Interaction Model for searching needed interactions
  */
 
 public class DrugInteraction {

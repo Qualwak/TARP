@@ -20,22 +20,29 @@
     <TextView
         android:id="@+id/text_view"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="50dp"
+        android:gravity="center"
+
+        android:background="@drawable/back"
         android:text="No text yet"
         android:textColor="@android:color/white"
-        android:textSize="20sp"
+        android:lines="1"
+
 
         />
 <RelativeLayout
     android:layout_width="match_parent"
     android:layout_height="match_parent">-->
     <Button
+        android:background="@drawable/button"
+        android:textColor="#ffffff"
         android:id="@+id/button_view"
         android:layout_width="match_parent"
         android:layout_height="67sp"
         android:text="Find"
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
+        android:textSize="22dp"
         android:onClick="onClick"
         />
 </RelativeLayout>

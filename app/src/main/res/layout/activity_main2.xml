@@ -6,63 +6,67 @@
     android:layout_height="match_parent"
     tools:context="com.lab.igor.labtesttask1.Main2Activity">
 
-   <RelativeLayout
-       android:layout_width="match_parent"
-       android:layout_height="match_parent">
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
 
-       <TextView
+        android:background="#2c313a">
 
-           android:id="@+id/text_search"
-           android:layout_width="280dp"
-           android:layout_height="wrap_content"
-           android:layout_alignParentEnd="true"
-           android:layout_alignParentRight="true"
-           android:layout_alignParentTop="true"
-           android:layout_marginEnd="20dp"
-           android:layout_marginRight="20dp"
-           android:layout_marginTop="80dp"
-           android:textSize="20sp" />
+        <ImageView
+            android:id="@+id/logo"
+            android:layout_width="280dp"
+            android:layout_height="100dp"
+            android:layout_alignLeft="@+id/drug_drug_interaction_checker"
+            android:layout_alignParentTop="true"
+            android:layout_alignStart="@+id/drug_drug_interaction_checker"
+            android:layout_marginTop="55dp"
+            android:src="@drawable/logotarp" />
+        <Button
+            android:id="@+id/drug_drug_interaction_checker"
+            android:layout_width="280dp"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="200dp"
+            android:background="@drawable/button"
+            android:text="Drug-Drug Interaction Checker"
+            android:textColor="#ffffff" />
 
-       <Button
-           android:id="@+id/drug_drug_interaction_checker"
-           android:layout_width="280dp"
-           android:layout_height="wrap_content"
-           android:layout_below="@+id/text_search"
-           android:layout_centerHorizontal="true"
-           android:layout_marginTop="41dp"
-           android:text="Drug-Drug Interaction Checker" />
+        <Button
+            android:id="@+id/drug_interaction_lookup"
+            android:layout_width="280dp"
+            android:layout_height="wrap_content"
+            android:layout_alignLeft="@+id/drug_drug_interaction_checker"
+            android:layout_alignStart="@+id/drug_drug_interaction_checker"
+            android:layout_below="@+id/drug_drug_interaction_checker"
+            android:layout_marginTop="41dp"
+            android:background="@drawable/button"
+            android:text="Drug Interaction Lookup"
+            android:textColor="#ffffff" />
 
-       <Button
-           android:id="@+id/drug_interaction_lookup"
-           android:layout_width="280dp"
-           android:layout_height="wrap_content"
-           android:layout_alignLeft="@+id/drug_drug_interaction_checker"
-           android:layout_alignStart="@+id/drug_drug_interaction_checker"
-           android:layout_below="@+id/drug_drug_interaction_checker"
-           android:layout_marginTop="41dp"
-           android:text="Drug Interaction Lookup" />
+        <Button
+            android:id="@+id/food_interaction_lookup"
+            android:layout_width="280dp"
+            android:layout_height="wrap_content"
+            android:layout_alignLeft="@+id/drug_interaction_lookup"
+            android:layout_alignStart="@+id/drug_interaction_lookup"
+            android:layout_below="@+id/drug_interaction_lookup"
+            android:layout_marginTop="41dp"
+            android:background="@drawable/button"
+            android:text="Food Interaction Lookup"
+            android:textColor="#ffffff" />
 
-       <Button
-           android:id="@+id/food_interaction_lookup"
-           android:layout_width="280dp"
-           android:layout_height="wrap_content"
-           android:layout_alignLeft="@+id/drug_interaction_lookup"
-           android:layout_alignStart="@+id/drug_interaction_lookup"
-           android:layout_below="@+id/drug_interaction_lookup"
-           android:layout_marginTop="41dp"
-           android:text="Food Interaction Lookup" />
+        <Button
+            android:id="@+id/drugs"
+            android:layout_width="280dp"
+            android:layout_height="wrap_content"
+            android:layout_alignLeft="@+id/food_interaction_lookup"
+            android:layout_alignStart="@+id/food_interaction_lookup"
+            android:layout_below="@+id/food_interaction_lookup"
+            android:layout_marginTop="41dp"
+            android:background="@drawable/button"
+            android:onClick="onClick"
+            android:text="Full list Of Drugs"
+            android:textColor="#ffffff" />
 
-      <Button
-          android:id="@+id/drugs"
-          android:layout_width="280dp"
-          android:layout_height="wrap_content"
-          android:layout_alignLeft="@+id/food_interaction_lookup"
-          android:layout_alignStart="@+id/food_interaction_lookup"
-          android:layout_below="@+id/food_interaction_lookup"
-          android:layout_marginTop="41dp"
-          android:text="Full list Of Drugs"
-          android:onClick="onClick"
-          />
-
-   </RelativeLayout>
+    </RelativeLayout>
 </android.support.constraint.ConstraintLayout>

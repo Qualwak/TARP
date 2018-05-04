@@ -31,6 +31,7 @@
                 android:layout_marginLeft="10dp"
                 android:gravity="center_vertical|start"
                 android:text="Eddy Lee"
+                android:textSize="16dp"
                 android:textAllCaps="true"
                 android:textStyle="bold" />
 
@@ -41,7 +42,8 @@
                 android:layout_marginLeft="10dp"
                 android:gravity="center_vertical|start"
                 android:text="e.lee@gmail.com"
-                android:textStyle="italic" />
+                android:textSize="18dp"
+                android:textStyle="bold" />
 
             <TextView
                 android:id="@+id/drug_name"

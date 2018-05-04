@@ -12,6 +12,7 @@
         android:layout_alignParentTop="true"
         app:mt_speechMode="false"
         app:mt_hint="Search"
+        app:mt_placeholder="Search"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
@@ -23,10 +24,24 @@
             android:layout_centerVertical="true"/>
     </com.mancj.materialsearchbar.MaterialSearchBar>
 
-    <android.support.v7.widget.RecyclerView
-        android:id="@+id/recycler_search"
-        android:layout_below="@+id/search_bar"
+    <TextView
+        android:id="@+id/number_of_interactions"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"/>
-
+        android:layout_height="53dp"
+        android:gravity="center"
+        android:textColor="#ffffff"
+        android:background="#2c313a"
+        android:layout_below="@id/search_bar"
+        android:textSize="20dp"
+        />
+    <android.support.v7.widget.RecyclerView
+        android:background="#2c313a"
+        android:id="@+id/recycler_search"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="center_vertical"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_below="@+id/search_bar"
+        android:layout_marginTop="53dp" />
 </RelativeLayout>

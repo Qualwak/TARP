@@ -22,8 +22,8 @@ class SearchViewHolder1 extends RecyclerView.ViewHolder {
     public TextView name, description, drugName;
     public SearchViewHolder1(View itemView) {
         super(itemView);
-        name = (TextView) itemView.findViewById(R.id.drugName);
-        description = (TextView) itemView.findViewById(R.id.description);
+        name = (TextView) itemView.findViewById(R.id.description);
+        description = (TextView) itemView.findViewById(R.id.drugName);
         drugName = (TextView) itemView.findViewById(R.id.drug_name);
 
     }

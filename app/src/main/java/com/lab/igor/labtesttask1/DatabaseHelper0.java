@@ -17,6 +17,7 @@ import java.io.OutputStream;
 
 public class DatabaseHelper0 extends SQLiteOpenHelper {
 
+
     private static String DB_PATH = "";
     private static String DB_NAME = "drug_scheme.db";
     private Context myContext = null;

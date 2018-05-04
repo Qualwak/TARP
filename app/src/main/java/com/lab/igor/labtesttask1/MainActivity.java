@@ -22,6 +22,9 @@ import com.google.android.gms.vision.text.TextRecognizer;
 
 import java.io.IOException;
 
+/**
+ * Here we detect text with camera help using Google OCR
+ */
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
 
     SurfaceView cameraView;
@@ -29,8 +32,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     CameraSource cameraSource;
     Button buttonView;
     final int RequestCameraPermissionID = 1001;
-
-
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
         switch (requestCode) {
@@ -56,7 +57,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         textView = findViewById(R.id.text_view);
         buttonView =  findViewById(R.id.button_view);
         buttonView.setOnClickListener(this);
-
+        buttonView.setText(getIntent().getStringExtra("info"));
+        //textView.setText(buttonView.getText());
 
         TextRecognizer textRecognizer = new TextRecognizer.Builder(getApplicationContext()).build();
         if (!textRecognizer.isOperational()) {
@@ -123,15 +125,31 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         }
     }
 
+    /**
+     * switch construction for buttons
+     * e.g.if we click on "Drug Interaction Lookup" if open activity with drug interactions
+     * the same option to others activity views
+     * @param view
+     */
     public void onClick(View view) {
-        switch (view.getId()) {
-            case R.id.button_view:
-               Intent intent = new Intent(this, Main2Activity.class);
-               intent.putExtra("text_view", textView.getText().toString());
-               startActivity(intent);
+
+        switch (buttonView.getText().toString()) {
+            case "Full list Of Drugs":
+                Intent intent = new Intent(this, MainActivity3.class);
+                intent.putExtra("text_view", textView.getText().toString());
+                startActivity(intent);
                 break;
-                default:
-                    break;
+            case "Drug-Drug Interaction Checker":
+                break;
+            case "Food Interaction Checker":
+                break;
+            case "Drug Interaction Lookup":
+                Intent intent3 = new Intent(this, Main4Activity.class);
+                intent3.putExtra("text_view", textView.getText().toString());
+                startActivity(intent3);
+                break;
+            default:
+                break;
         }
     }
 

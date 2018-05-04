@@ -12,6 +12,7 @@
         android:layout_alignParentTop="true"
         app:mt_speechMode="false"
         app:mt_hint="Search"
+        app:mt_placeholder="Search"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
@@ -19,11 +20,13 @@
             android:id="@+id/text_found"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:lines="2"
             android:layout_centerHorizontal="true"
             android:layout_centerVertical="true"/>
     </com.mancj.materialsearchbar.MaterialSearchBar>
 
     <android.support.v7.widget.RecyclerView
+        android:background="#2c313a"
         android:id="@+id/recycler_search"
         android:layout_below="@+id/search_bar"
         android:layout_width="match_parent"
