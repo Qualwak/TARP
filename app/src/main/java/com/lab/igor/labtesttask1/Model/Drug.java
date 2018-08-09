@@ -11,7 +11,15 @@ public class Drug {
     private String name;
     private String description;
     private String type;
+    private String synonyms;
 
+    public String getSynonyms() {
+        return synonyms;
+    }
+
+    public void setSynonyms(String synonyms) {
+        this.synonyms = synonyms;
+    }
 
     public Drug() {
 
@@ -49,11 +57,12 @@ public class Drug {
         this.type = type;
     }
 
-    public Drug(int id, String name, String description, String type) {
+    public Drug(int id, String name, String description, String type, String synonyms) {
 
         this.id = id;
         this.name = name;
         this.description = description;
         this.type = type;
+        this.synonyms = synonyms;
     }
 }

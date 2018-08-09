@@ -24,17 +24,15 @@ public class DatabaseHelper0 extends SQLiteOpenHelper {
     private SQLiteDatabase myDataBase;
 
 
-
     /**
-     *
      * @param context
      */
     public DatabaseHelper0(Context context) {
         super(context, DB_NAME, null, 1);
         if (Build.VERSION.SDK_INT >= 17)
-            DB_PATH = context.getApplicationInfo().dataDir+"/databases/";
+            DB_PATH = context.getApplicationInfo().dataDir + "/databases/";
         else
-            DB_PATH = "/data/data/"+context.getPackageName()+"/databases/";
+            DB_PATH = "/data/data/" + context.getPackageName() + "/databases/";
 
         myContext = context;
     }
@@ -63,7 +61,7 @@ public class DatabaseHelper0 extends SQLiteOpenHelper {
         SQLiteDatabase checkDB = null;
 
         try {
-            String myPath = DB_PATH+DB_NAME;
+            String myPath = DB_PATH + DB_NAME;
             checkDB = SQLiteDatabase.openDatabase(myPath, null, SQLiteDatabase.OPEN_READWRITE);
         } catch (SQLiteException e) {
             // database does not exist yet
@@ -82,7 +80,7 @@ public class DatabaseHelper0 extends SQLiteOpenHelper {
             InputStream myInput = myContext.getAssets().open(DB_NAME);
 
             // Path to the just created empty db
-            String outFileName = DB_PATH+DB_NAME;
+            String outFileName = DB_PATH + DB_NAME;
 
             // Open the empty database as the output stream
             OutputStream myOutput = new FileOutputStream(outFileName);
@@ -106,7 +104,7 @@ public class DatabaseHelper0 extends SQLiteOpenHelper {
     public SQLiteDatabase openDataBase() throws SQLException {
 
         // Open database
-        String myPath = DB_PATH+DB_NAME;
+        String myPath = DB_PATH + DB_NAME;
         myDataBase = SQLiteDatabase.openDatabase(myPath, null, SQLiteDatabase.OPEN_READWRITE);
         return myDataBase;
 

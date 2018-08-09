@@ -6,55 +6,55 @@
     android:layout_margin="8dp"
     app:cardElevation="8dp">
 
-    <LinearLayout
+    <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_margin="8dp"
-        android:background="@android:color/white"
-        android:orientation="horizontal">
+        android:orientation="horizontal"
+        android:padding="10dp"
+        android:background="@color/white">
 
-        <ImageView
-            android:layout_width="70dp"
-            android:layout_height="70dp"
-            android:src="@drawable/ic_healing_black_24dp" />
 
-        <LinearLayout
-            android:layout_width="0dp"
+        <TextView
+            android:id="@+id/name"
+            android:layout_width="200dp"
             android:layout_height="wrap_content"
-            android:layout_weight="9"
-            android:orientation="vertical">
+            android:layout_alignParentLeft="true"
+            android:layout_centerVertical="true"
+            android:text="Eddy LeeEddy LeeEddy LeeEddy LeeEddy LeeEddy LeeEddy LeeEddy LeeEddy LeeEddy Lee"
+            android:textAllCaps="true"
+            android:textColor="#000"
+            android:textStyle="bold" />
 
-            <TextView
-                android:id="@+id/name"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="10dp"
-                android:gravity="center_vertical|start"
-                android:text="Eddy Lee"
-                android:textAllCaps="true"
-                android:textStyle="bold" />
+        <Button
+            android:id="@+id/add_drug_to_profile"
+            android:layout_width="wrap_content"
+            android:layout_height="30dp"
+            android:layout_alignParentRight="true"
+            android:background="?android:attr/selectableItemBackground"
+            android:text="@string/add_to_my_list"
+            android:textColor="#f44242"
+            android:textSize="14dp" />
+            <!--<TextView-->
+                <!--android:id="@+id/description"-->
+                <!--android:layout_width="wrap_content"-->
+                <!--android:layout_height="wrap_content"-->
+                <!--android:layout_marginLeft="10dp"-->
+                <!--android:gravity="center_vertical|start"-->
+                <!--android:text="e.lee@gmail.com"-->
+                <!--android:textStyle="italic" />-->
 
-            <TextView
-                android:id="@+id/description"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="10dp"
-                android:gravity="center_vertical|start"
-                android:text="e.lee@gmail.com"
-                android:textStyle="italic" />
-
-            <TextView
-                android:id="@+id/type"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="10dp"
-                android:gravity="center_vertical|start"
-                android:text="89179232662"
-                android:textAllCaps="true"
-                android:textStyle="bold" />
+            <!--<TextView-->
+                <!--android:id="@+id/type"-->
+                <!--android:layout_width="wrap_content"-->
+                <!--android:layout_height="wrap_content"-->
+                <!--android:layout_marginLeft="10dp"-->
+                <!--android:gravity="center_vertical|start"-->
+                <!--android:text="89179232662"-->
+                <!--android:textAllCaps="true"-->
+                <!--android:textStyle="bold" />-->
 
 
-        </LinearLayout>
-    </LinearLayout>
+
+    </RelativeLayout>
 
 </android.support.v7.widget.CardView>

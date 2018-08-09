@@ -26,7 +26,7 @@
     </com.mancj.materialsearchbar.MaterialSearchBar>
 
     <android.support.v7.widget.RecyclerView
-        android:background="#2c313a"
+        android:background="@color/white"
         android:id="@+id/recycler_search"
         android:layout_below="@+id/search_bar"
         android:layout_width="match_parent"

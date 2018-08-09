@@ -8,6 +8,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:weightSum="8"
+    android:orientation="vertical"
     tools:context="com.lab.igor.labtesttask1.MainActivity">
 
     <SurfaceView
@@ -16,6 +17,8 @@
         android:layout_height="match_parent"
         android:layout_weight="1"
         />
+
+
 
     <TextView
         android:id="@+id/text_view"

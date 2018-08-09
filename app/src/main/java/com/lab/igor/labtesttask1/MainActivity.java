@@ -64,10 +64,11 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         if (!textRecognizer.isOperational()) {
             Log.v("MainActivity", "Detector dependencies are not yet available");
         } else {
+
             cameraSource = new CameraSource.Builder(getApplicationContext(), textRecognizer)
                     .setFacing(CameraSource.CAMERA_FACING_BACK)
                     .setRequestedPreviewSize(1280, 1024)
-                    .setRequestedFps(2.0f)
+                    .setRequestedFps(15.0f)
                     .setAutoFocusEnabled(true)
                     .build();
             cameraView.getHolder().addCallback(new SurfaceHolder.Callback() {
@@ -80,6 +81,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                                     RequestCameraPermissionID);
                             return;
                         }
+//                        cameraView.setZOrderMediaOverlay(true);
+//                        cameraView.setZOrderOnTop(true);
                         cameraSource.start(cameraView.getHolder());
                     } catch (IOException e) {
                         e.printStackTrace();
@@ -141,10 +144,13 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 break;
             case "Drug-Drug Interaction Checker":
                 break;
-            case "Food Interaction Checker":
+            case "Food Interaction Lookup":
+                Intent intent2 = new Intent(this, Main5Activity.class);
+                intent2.putExtra("text_view", textView.getText().toString());
+                startActivity(intent2);
                 break;
             case "Drug Interaction Lookup":
-                Intent intent3 = new Intent(this, Main4Activity.class);
+                Intent intent3 = new Intent(this, Main7Activity.class);
                 intent3.putExtra("text_view", textView.getText().toString());
                 startActivity(intent3);
                 break;
