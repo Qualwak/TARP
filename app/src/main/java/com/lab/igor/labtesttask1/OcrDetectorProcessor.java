@@ -110,15 +110,17 @@ public class OcrDetectorProcessor implements Detector.Processor<TextBlock> {
                     if (mapDrugs.get(items.valueAt(q).getValue().toLowerCase()) != null) {
                         if (usersDrugs != null && usersDrugs.contains(items.valueAt(q).getValue().substring(0, 1).toUpperCase() + items.valueAt(q).getValue().substring(1).toLowerCase())) {
                             drugsCamera.add(items.valueAt(q).getValue() + mapDrugs.get(items.valueAt(q).getValue().toLowerCase()) + items.valueAt(q).getValue());
-                        } else
+                        } else {
                             drugsCamera.add(items.valueAt(q).getValue() + mapDrugs.get(items.valueAt(q).getValue().toLowerCase()) + items.valueAt(q).getValue());
+                        }
                     } else if (mapDrugs.get(items.valueAt(q).getValue().toLowerCase().substring(0, items.valueAt(q).getValue().toLowerCase().indexOf(' '))) != null) {
                         Log.d("OCRDETECT", "HERE IS IT" + items.valueAt(q).getValue().toLowerCase().substring(0, items.valueAt(q).getValue().toLowerCase().indexOf(' ')));
                         if (usersDrugs != null && usersDrugs.contains(items.valueAt(q).getValue().substring(0, 1).toUpperCase() + items.valueAt(q).getValue().toLowerCase().substring(1, items.valueAt(q).getValue().toLowerCase().indexOf(" ")))) {
                             drugsCamera.add(items.valueAt(q).getValue().substring(0, items.valueAt(q).getValue().indexOf(' ')) + mapDrugs.get(items.valueAt(q).getValue().toLowerCase().substring(0, items.valueAt(q).getValue().indexOf(" "))) + items.valueAt(q).getValue().substring(0, items.valueAt(q).getValue().indexOf(" ")));
-                        } else
+                        } else {
                             drugsCamera.add(items.valueAt(q).getValue().substring(0, items.valueAt(q).getValue().indexOf(' ')) + mapDrugs.get(items.valueAt(q).getValue().toLowerCase().substring(0, items.valueAt(q).getValue().indexOf(" "))) + items.valueAt(q).getValue().substring(0, items.valueAt(q).getValue().indexOf(" ")));
 
+                        }
                     }
 //                    } else if (mapDrugs.get(items.valueAt(q).getValue().substring(0, items.valueAt(q).getValue().indexOf(' ')).toLowerCase()) != null) {
 //                        if (usersDrugs != null && usersDrugs.contains(items.valueAt(q).getValue().substring(0,1).toUpperCase() + items.valueAt(q).getValue().substring(items.valueAt(q).getValue().indexOf(' ')).toLowerCase())) {
