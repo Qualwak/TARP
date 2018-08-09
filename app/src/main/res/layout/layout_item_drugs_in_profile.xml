@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="horizontal"
+    android:paddingTop="10dp"
+    android:paddingRight="0dp"
+    android:paddingLeft="10dp"
+    android:paddingBottom="10dp"
+    android:background="#424242"
+    >
+
+    <TextView
+        android:id="@+id/drug_profile_item"
+        android:layout_width="200dp"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_centerVertical="true"
+        android:textSize="14dp"
+        android:text="(8R,9S,10R,13S,14S)-13-Methyl-1,2,4,7,8,9,10,11,12,14,15,16-dodecahydrocyclopenta[a]phenanthrene-3,17-dione
+"
+        android:textStyle="bold"
+        android:textColor="#29a53e"
+        />
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+
+        >
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="30dp"
+        android:layout_alignParentRight="true"
+        android:text="view more"
+        android:textSize="14dp"
+        android:textColor="#f44242"
+
+        android:background="?android:attr/selectableItemBackground"
+        android:id="@+id/button_profile_drug_view"
+        />
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="30dp"
+        android:layout_alignParentRight="false"
+        android:text="@string/delete"
+        android:textSize="14dp"
+        android:textColor="#f44242"
+
+        android:background="?android:attr/selectableItemBackground"
+        android:id="@+id/button_profile_drug_delete"
+        />
+    </LinearLayout>
+</RelativeLayout>

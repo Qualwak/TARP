@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.lab.igor.labtesttask1.MainSpeechActivity"
+    android:background="#ffffff">
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_centerInParent="true"
+        android:layout_height="wrap_content"
+
+        >
+
+        <Button
+            android:layout_width="280dp"
+            android:layout_height="wrap_content"
+            android:text="@string/listen_to_instructions"
+            android:layout_gravity="center|center_vertical"
+            android:layout_marginBottom="27dp"
+            android:textColor="#ffffff"
+            android:background="@drawable/button"
+            android:id="@+id/instructions"
+            />
+        <Button
+            android:layout_width="280dp"
+            android:layout_height="wrap_content"
+            android:text="@string/go_to_settings"
+            android:layout_gravity="center"
+            android:textColor="#ffffff"
+            android:background="@drawable/button"
+            android:layout_marginBottom="27dp"
+            android:id="@+id/setting_speech"
+            />
+
+        <Button
+            android:layout_width="280dp"
+            android:layout_height="wrap_content"
+            android:text="@string/profile_settings"
+            android:layout_gravity="center"
+            android:textColor="#ffffff"
+            android:background="@drawable/button"
+            android:id="@+id/profile"
+            />
+    </LinearLayout>
+
+</RelativeLayout>

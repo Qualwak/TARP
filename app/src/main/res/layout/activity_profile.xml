@@ -1,0 +1,125 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:padding="10dp"
+    tools:context="com.lab.igor.labtesttask1.ProfileActivity">
+
+    <TextView
+        android:id="@+id/users_birth_date"
+        android:layout_width="200dp"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:text="@string/date_of_birth_unspecified_yet"
+        android:textColor="#000"
+        android:textSize="17dp" />
+
+    <Button
+        android:id="@+id/button_on_date"
+        android:layout_width="wrap_content"
+        android:layout_height="30dp"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentRight="true"
+
+        android:layout_alignParentTop="true"
+        android:background="?android:attr/selectableItemBackground"
+        android:onClick="setBirthDate"
+        android:text="@string/set_birth_date"
+        android:textColor="#000"
+        android:textSize="14dp" />
+
+    <com.weiwangcn.betterspinner.library.material.MaterialBetterSpinner
+        android:id="@+id/android_material_design_spinner"
+        android:layout_width="200dp"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_below="@+id/users_birth_date"
+        android:layout_marginTop="23dp"
+        android:hint="@string/select_your_gender"
+        android:textColorHint="#05ab9a">
+
+    </com.weiwangcn.betterspinner.library.material.MaterialBetterSpinner>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/your_drugs"
+        android:layout_below="@id/android_material_design_spinner"
+        android:layout_marginTop="38dp"
+        android:textColor="#000"
+        android:textSize="17dp"
+        android:id="@+id/text_drugs"
+        />
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBaseline="@+id/text_drugs"
+        android:layout_alignBottom="@+id/text_drugs"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentRight="true"
+        android:text="@string/add_new_drug"
+        android:background="?android:attr/selectableItemBackground"
+        android:textColor="#000"
+        android:textSize="14dp"
+        android:id="@+id/add_drug_profile"
+        />
+
+    <android.support.v7.widget.RecyclerView
+        android:layout_width="match_parent"
+        android:layout_below="@id/text_drugs"
+        android:layout_marginTop="20dp"
+        android:layout_height="300dp"
+        android:id="@+id/recycler_view_profile_drugs"
+        >
+
+    </android.support.v7.widget.RecyclerView>
+
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/button_save_profile"
+        android:layout_below="@id/button_on_date"
+        android:layout_marginTop="38dp"
+        android:layout_alignParentRight="true"
+        android:background="?android:attr/selectableItemBackground"
+        android:textColor="#000"
+        android:textSize="14dp"
+        android:text="@string/save"
+        />
+    <!--<Button-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:layout_below="@+id/recycler_view_profile_drugs"-->
+        <!--android:layout_marginTop="10dp"-->
+        <!--android:text="START"-->
+        <!--android:id="@+id/start_working"-->
+        <!--/>-->
+    <Button
+        android:layout_width="150dp"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/recycler_view_profile_drugs"
+        android:background="?android:attr/selectableItemBackground"
+        android:textColor="#000"
+        android:textSize="14dp"
+        android:text="@string/my_drug_interactions"
+        android:id="@+id/user_drug_interactions"
+        />
+    <Button
+        android:layout_width="150dp"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/recycler_view_profile_drugs"
+        android:background="?android:attr/selectableItemBackground"
+        android:textColor="#000"
+        android:textSize="14dp"
+        android:layout_alignParentRight="true"
+        android:text="@string/my_food_interactions"
+        android:id="@+id/user_food_interactions"
+        />
+</RelativeLayout>
