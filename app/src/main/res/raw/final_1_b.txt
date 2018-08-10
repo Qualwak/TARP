@@ -2794,7 +2794,6 @@ hyoscyaminumq,qTake 30 minutes before meals, and at bedtime.q,q1
 hypertilq,qCaptopril decreases the excretion of potassium. Salt substitutes containing potassium increase the risk of hyperkalemia. q,q4
 hypoxanthineq,qPreferably on an empty stomach, drink plenty of li\quids, avoid alcohol.q,q1
 häminq,qFolic acid needs increased.q,q5
-iq,qDan shen, dong \quai, evening primrose oil, gingko, policosanol, willow barkq,q1129
 ici-204,219q,qTake on empty stomach: 1 hour before or 2 hours after meals.q,q1
 icl 670q,qDispersion in carbonated drinks or milk is not recommended due to foaming and slow dispersion, respectively.q,q4
 icl 670aq,qDispersion in carbonated drinks or milk is not recommended due to foaming and slow dispersion, respectively.q,q4
@@ -2802,7 +2801,6 @@ imid3q,qWhen given with a fatty meal, the extent of absorption is reduced.q,q1
 imid-1q,qWhen given with a fatty meal, the extent of absorption is reduced.q,q1
 inf 3355q,qAvoid alcohol.q,q2
 inhq,qAvoid aged foods (cheese, red wine), pickled foods, cured foods (bacon/ham), chocolate, fava beans, beer, unless approved by your physician.q,q6
-inoq,qTake with food.q,q374
 irapq,qAvoid alcohol.q,q7
 is 5-mnq,qTake without regard to meals.q,q1
 is-5-mnq,qTake without regard to meals.q,q1
@@ -4559,7 +4557,6 @@ vitamin b3q,qAvoid alcohol.q,q2
 vorinostatq,qOral administration with a high-fat meal resulted in an increase (33%) in the extent of absorption and a modest decrease in the rate of absorption (T<sub>max</sub> delayed 2.5 hours) compared to the fasted state.q,q1
 vorinostatumq,qOral administration with a high-fat meal resulted in an increase (33%) in the extent of absorption and a modest decrease in the rate of absorption (T<sub>max</sub> delayed 2.5 hours) compared to the fasted state.q,q1
 vérapamilq,qAvoid alcohol.q,q5
-wq,qFollowing a single dose of the extended-release formulation with a high fat meal, Cmax of topiramate increased by 37% and shortened the Tmax to approximately 8 hours. AUC was not effected. According to the FDA label, Trokendi XR can be taken without regard to food.q,q17
 walixq,qTake with food, usually once a day after breakfast. Food decreases the rate of absorption but not the amount absorbed. Avoid alcohol.q,q1
 warfarinq,qAvoid alcohol.q,q6
 wellvoneq,qFatty foods increase absorption.q,q2
@@ -4680,7 +4677,6 @@ d-pseudoephedrineq,qTake without regard to meals.q,q1
 d-psi-2-methylamino-1-phenyl-1-propanolq,qTake without regard to meals.q,q1
 d-psi-ephedrineq,qTake without regard to meals.q,q1
 dalaq,qTake with food to reduce irritation.q,q1
-dcq,qWhen given with a fatty meal, the extent of absorption is reduced.q,q4
 dcydq,qDo not take calcium, aluminium, magnesium or iron supplements within 2 hours of taking this medication.q,q2
 delta(1)-dehydrocortisolq,qAvoid alcohol. Avoid caffeine.q,q2
 delta(1)-dehydrohydrocortisoneq,qAvoid alcohol. Avoid caffeine.q,q2

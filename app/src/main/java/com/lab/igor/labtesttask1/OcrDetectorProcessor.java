@@ -101,27 +101,37 @@ public class OcrDetectorProcessor implements Detector.Processor<TextBlock> {
 //                }
 //            }
 //            Log.d("OcrDetectorProcessor", "CHECKING");
-            if (item != null && flag) {
+            if (item != null && flag) {// && item.getValue().split(" ")[0].split("\n")[0].length() > 3) {
                 final List<String> drugsCamera = new ArrayList<>();
                 for (int q = 0; q < items.size(); q++) {
                     Log.d("OcrDetectorProcessor", items.valueAt(q).getValue());
                     Log.d("OcrDetectorProcessor", items.valueAt(q).getValue() + " is added");
                     //if (!mapDrugs.get(items.valueAt(q).getValue().toLowerCase()).equals(null)) {
-                    if (mapDrugs.get(items.valueAt(q).getValue().toLowerCase()) != null) {
-                        if (usersDrugs != null && usersDrugs.contains(items.valueAt(q).getValue().substring(0, 1).toUpperCase() + items.valueAt(q).getValue().substring(1).toLowerCase())) {
-                            drugsCamera.add(items.valueAt(q).getValue() + mapDrugs.get(items.valueAt(q).getValue().toLowerCase()) + items.valueAt(q).getValue());
-                        } else {
-                            drugsCamera.add(items.valueAt(q).getValue() + mapDrugs.get(items.valueAt(q).getValue().toLowerCase()) + items.valueAt(q).getValue());
-                        }
-                    } else if (mapDrugs.get(items.valueAt(q).getValue().toLowerCase().substring(0, items.valueAt(q).getValue().toLowerCase().indexOf(' '))) != null) {
-                        Log.d("OCRDETECT", "HERE IS IT" + items.valueAt(q).getValue().toLowerCase().substring(0, items.valueAt(q).getValue().toLowerCase().indexOf(' ')));
-                        if (usersDrugs != null && usersDrugs.contains(items.valueAt(q).getValue().substring(0, 1).toUpperCase() + items.valueAt(q).getValue().toLowerCase().substring(1, items.valueAt(q).getValue().toLowerCase().indexOf(" ")))) {
-                            drugsCamera.add(items.valueAt(q).getValue().substring(0, items.valueAt(q).getValue().indexOf(' ')) + mapDrugs.get(items.valueAt(q).getValue().toLowerCase().substring(0, items.valueAt(q).getValue().indexOf(" "))) + items.valueAt(q).getValue().substring(0, items.valueAt(q).getValue().indexOf(" ")));
-                        } else {
-                            drugsCamera.add(items.valueAt(q).getValue().substring(0, items.valueAt(q).getValue().indexOf(' ')) + mapDrugs.get(items.valueAt(q).getValue().toLowerCase().substring(0, items.valueAt(q).getValue().indexOf(" "))) + items.valueAt(q).getValue().substring(0, items.valueAt(q).getValue().indexOf(" ")));
+//                    String string1 = items.valueAt(q).getValue().toLowerCase().substring(0, items.valueAt(q).getValue().indexOf(" "));
+//                    String string2 = items.valueAt(q).getValue().toLowerCase().substring(0, items.valueAt(q).getValue().indexOf("\n"));
+                    String nextArray = items.valueAt(q).getValue().split(" ")[0].split("\n")[0];
+                    if (mapDrugs.get(nextArray.toLowerCase()) != null) {
+                        Log.d("OcrDetectorProcessor", nextArray);
+//                        Log.d("OcrDetectorProcessor", string1);
+//                        Log.d("OcrDetectorProcessor", string2);
+                        Log.d("OcrDetectorProcessor", "HERE 1");
 
+                        if (usersDrugs != null && usersDrugs.contains(nextArray.substring(0, 1).toUpperCase() + nextArray.substring(1).toLowerCase())) {
+                            drugsCamera.add(nextArray + mapDrugs.get(nextArray.toLowerCase()) + nextArray);
+                            Log.d("OcrDetectorProcessor", "HERE 2");
+                        } else {
+                            Log.d("OcrDetectorProcessor", "HERE 3");
+                            drugsCamera.add(nextArray + mapDrugs.get(nextArray.toLowerCase()) + nextArray);
                         }
                     }
+//                    else if (mapDrugs.get(items.valueAt(q).getValue().toLowerCase().substring(0, items.valueAt(q).getValue().toLowerCase().indexOf(' '))) != null) {
+//                        Log.d("OCRDETECT", "HERE IS IT" + items.valueAt(q).getValue().toLowerCase().substring(0, items.valueAt(q).getValue().toLowerCase().indexOf(' ')));
+//                        if (usersDrugs != null && usersDrugs.contains(items.valueAt(q).getValue().substring(0, 1).toUpperCase() + items.valueAt(q).getValue().toLowerCase().substring(1, items.valueAt(q).getValue().toLowerCase().indexOf(" ")))) {
+//                            drugsCamera.add(items.valueAt(q).getValue().substring(0, items.valueAt(q).getValue().indexOf(' ')) + mapDrugs.get(items.valueAt(q).getValue().toLowerCase().substring(0, items.valueAt(q).getValue().indexOf(" "))) + items.valueAt(q).getValue().substring(0, items.valueAt(q).getValue().indexOf(" ")));
+//                        } else {
+//                            drugsCamera.add(items.valueAt(q).getValue().substring(0, items.valueAt(q).getValue().indexOf(' ')) + mapDrugs.get(items.valueAt(q).getValue().toLowerCase().substring(0, items.valueAt(q).getValue().indexOf(" "))) + items.valueAt(q).getValue().substring(0, items.valueAt(q).getValue().indexOf(" ")));
+//                        }
+//                    }
 //                    } else if (mapDrugs.get(items.valueAt(q).getValue().substring(0, items.valueAt(q).getValue().indexOf(' ')).toLowerCase()) != null) {
 //                        if (usersDrugs != null && usersDrugs.contains(items.valueAt(q).getValue().substring(0,1).toUpperCase() + items.valueAt(q).getValue().substring(items.valueAt(q).getValue().indexOf(' ')).toLowerCase())) {
 //                            drugsCamera.add(items.valueAt(q).getValue() + mapDrugs.get(items.valueAt(q).getValue().substring(0, items.valueAt(q).getValue().indexOf(' ')).toLowerCase()) + items.valueAt(q).getValue());
@@ -157,7 +167,7 @@ public class OcrDetectorProcessor implements Detector.Processor<TextBlock> {
 //                    Log.d("OcrDetectorProcessor", items.valueAt(q).getValue());
 //                    drugsCamera[q] = "HEEEEEELO";
 //                }
-                textToSearch = item.getValue();
+//                textToSearch = item.getValue();
 //                new Thread(new Runnable() {
 //                    @Override
 //                    public void run() {
@@ -216,8 +226,9 @@ public class OcrDetectorProcessor implements Detector.Processor<TextBlock> {
     }
 
     public static boolean linearSearch(String[] strings, String value) {
+        String values = value.split("\n")[0].split(" ")[0];
         for (int i = 0; i < strings.length; i++) {
-            if (value.equals(strings[i])) {
+            if (values.equals(strings[i])) {
                 Log.d("OcrDetetectorProcessor", "DRUG FOUND" + strings[i]);
                 return true;
             }

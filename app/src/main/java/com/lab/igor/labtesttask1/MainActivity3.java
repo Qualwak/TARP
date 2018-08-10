@@ -158,8 +158,8 @@ public class MainActivity3 extends AppCompatActivity {
 
     private void loadSuggestList() {
         //suggestList = databaseHelper.getNames();
-        suggestList = listSuggestedTest;
-        materialSearchBar.setLastSuggestions(suggestList);
+//        suggestList = listSuggestedTest;
+//        materialSearchBar.setLastSuggestions(suggestList);
     }
 
     public String[] returning() throws IOException {
