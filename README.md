@@ -4,11 +4,11 @@
 <p>This application allows user to find drug-food interactions with their drug. Due to the app user will never get side effects because of the use of incompatible drugs.</p>
 
 
-
-<h2>For installation you need:</h2>
+<h2>Installation</h2>
+<p>For installation you need:</p>
 <p>1. Java on your PC</p>
 <p>2. Android Studio</p>
-<p>After downloading the project to your PC</p>
+<p>After downloading the project to your PC:</p>
 <p>1. Open the project through Android Studio</p>
 <p>2. Build it (in navigate panel choose Build -> Make Project)</p>
 
