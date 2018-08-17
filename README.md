@@ -6,14 +6,14 @@
 
 
 <h2>For installation you need:</h2>
-1. Java on your PC
-2. Android Studio
-After downloading the project to your PC
-1. Open the project through Android Studio
-2. Build it (in navigate panel choose Build -> Make Project)
+<p>1. Java on your PC</p>
+<p>2. Android Studio</p>
+<p>After downloading the project to your PC</p>
+<p>1. Open the project through Android Studio</p>
+<p>2. Build it (in navigate panel choose Build -> Make Project)</p>
 
-3. Run (in navigate panel choose Run -> Run).
-  There is two possible ways to Run: Emulator, Your Device. For Emulator just choose the phone you want. For your device you need to        install drivers that Android Studio will propose.
+<p>3. Run (in navigate panel choose Run -> Run).</p>
+  <p>There is two possible ways to Run: Emulator, Your Device. For Emulator just choose the phone you want. For your device you need to        install drivers that Android Studio will propose.</p>
 
 -------------------------------------------------------
 For .apk installation:
