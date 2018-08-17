@@ -5,7 +5,7 @@
 
 
 
-For installation you need:
+<h2>For installation you need:</h2>
 1. Java on your PC
 2. Android Studio
 After downloading the project to your PC
