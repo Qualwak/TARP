@@ -1,10 +1,5 @@
 package com.lab.igor.labtesttask1.model;
 
-/**
- * Created by Igor on 08-Apr-18.
- * Drug Model for working with database and app
- */
-
 public class Drug {
 
     private int id;

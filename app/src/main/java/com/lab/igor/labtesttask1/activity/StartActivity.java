@@ -41,18 +41,10 @@ public class StartActivity extends AppCompatActivity implements View.OnClickList
         new AlertDialog.Builder(this)
                 .setTitle("Settings")
                 .setMessage("Do you want to set your personal information?")
-                .setNegativeButton("NO", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialogInterface, int i) {
-                        dialogInterface.dismiss();
-                    }
-                })
-                .setPositiveButton("YES", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialogInterface, int i) {
-                        Intent intent3 = new Intent(getApplicationContext(), ProfileActivity.class);
-                        startActivity(intent3);
-                    }
+                .setNegativeButton("NO", (dialogInterface, i) -> dialogInterface.dismiss())
+                .setPositiveButton("YES", (dialogInterface, i) -> {
+                    Intent intent3 = new Intent(getApplicationContext(), ProfileActivity.class);
+                    startActivity(intent3);
                 })
                 .create().show();
         SharedPreferences preferences = getSharedPreferences("prefs", MODE_PRIVATE);
@@ -65,24 +57,18 @@ public class StartActivity extends AppCompatActivity implements View.OnClickList
         switch (view.getId()) {
             case R.id.drug_interaction_lookup:
                 Toast.makeText(this, "Please wait, it is opening...", Toast.LENGTH_SHORT).show();
-                new Thread(new Runnable() {
-                    @Override
-                    public void run() {
-                        Intent intent1 = new Intent(StartActivity.this, OcrCaptureActivity.class);
-                        intent1.putExtra("info", buttonDrugInteractionsLookup.getText().toString());
-                        startActivity(intent1);
-                    }
+                new Thread(() -> {
+                    Intent intent1 = new Intent(StartActivity.this, OcrCaptureActivity.class);
+                    intent1.putExtra("info", buttonDrugInteractionsLookup.getText().toString());
+                    startActivity(intent1);
                 }).start();
                 break;
             case R.id.food_interaction_lookup:
                 Toast.makeText(this, "Please wait, it is opening...", Toast.LENGTH_LONG).show();
-                new Thread(new Runnable() {
-                    @Override
-                    public void run() {
-                        Intent intent2 = new Intent(StartActivity.this, OcrCaptureActivity.class);
-                        intent2.putExtra("info", buttonFoodInteractionLookup.getText().toString());
-                        startActivity(intent2);
-                    }
+                new Thread(() -> {
+                    Intent intent2 = new Intent(StartActivity.this, OcrCaptureActivity.class);
+                    intent2.putExtra("info", buttonFoodInteractionLookup.getText().toString());
+                    startActivity(intent2);
                 }).start();
                 break;
             case R.id.settings:

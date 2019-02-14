@@ -12,7 +12,7 @@ import android.widget.TextView;
 
 import com.lab.igor.labtesttask1.background.BackgroundLoadFoodInteractions;
 import com.lab.igor.labtesttask1.R;
-import com.lab.igor.labtesttask1.adapter.SearchAdapter2;
+import com.lab.igor.labtesttask1.adapter.SearchFoodInteractionsAdapter;
 import com.lab.igor.labtesttask1.db.DatabaseHelper;
 import com.mancj.materialsearchbar.MaterialSearchBar;
 
@@ -21,11 +21,11 @@ import java.util.List;
 
 public class FoodInteractionsActivity extends AppCompatActivity {
 
-    private static final String TAG = "q";
+    private static final String TAG = "FoodInteractionsActivity";
     RecyclerView recyclerView;
     ProgressBar progressBar;
     RecyclerView.LayoutManager layoutManager;
-    SearchAdapter2 adapter;
+    SearchFoodInteractionsAdapter adapter;
     TextView textView2;
     TextView textViewNumberOfInteractions;
 
@@ -60,11 +60,7 @@ public class FoodInteractionsActivity extends AppCompatActivity {
         // setup search bar
         materialSearchBar.setHint("Search");
 
-
-        //materialSearchBar.setText(intent.getStringExtra("text_view"));
-        //materialSearchBar.setCardViewElevation(10);
         loadSuggestList();
-
 
         materialSearchBar.addTextChangeListener(new TextWatcher() {
 
@@ -107,13 +103,6 @@ public class FoodInteractionsActivity extends AppCompatActivity {
 
             }
         });
-
-        // Intent intent1 = getIntent();
-        // init Adapter default set all result
-        //adapter = new SearchAdapter(this, databaseHelper.getDrug());
-
-        // adapter = new SearchAdapter2(this, databaseHelper.getFoodInteractionsByDrugName(textView2.getText().toString()));
-        // recyclerView.setAdapter(adapter);
     }
 
     @Override
@@ -123,7 +112,7 @@ public class FoodInteractionsActivity extends AppCompatActivity {
     }
 
     private void startSearch(String text) {
-        adapter = new SearchAdapter2(this, databaseHelper.getFoodInteractionsByDrugName(text));
+        adapter = new SearchFoodInteractionsAdapter(this, databaseHelper.getFoodInteractionsByDrugName(text));
         recyclerView.setAdapter(adapter);
     }
 

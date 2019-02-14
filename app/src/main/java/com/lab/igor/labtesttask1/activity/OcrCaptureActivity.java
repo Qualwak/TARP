@@ -42,14 +42,13 @@ import android.view.ScaleGestureDetector;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.GoogleApiAvailability;
-import com.lab.igor.labtesttask1.OcrDetectorProcessor;
-import com.lab.igor.labtesttask1.OcrGraphic;
+import com.lab.igor.labtesttask1.ocr.OcrDetectorProcessor;
+import com.lab.igor.labtesttask1.ocr.OcrGraphic;
 import com.lab.igor.labtesttask1.R;
 import com.lab.igor.labtesttask1.adapter.MyRecyclerViewAdapter;
 import com.lab.igor.labtesttask1.db.DatabaseHelper;
@@ -75,8 +74,6 @@ import java.util.Map;
  */
 public final class OcrCaptureActivity extends AppCompatActivity {
     private static final String TAG = "OcrCaptureActivity";
-
-    private ProgressBar progressBar;
 
     // Intent request code to handle updating play services if needed.
     private static final int RC_HANDLE_GMS = 9001;
@@ -120,47 +117,36 @@ public final class OcrCaptureActivity extends AppCompatActivity {
     public void onCreate(Bundle bundle) {
         super.onCreate(bundle);
         setContentView(R.layout.ocr_capture);
-        progressBar = (ProgressBar) findViewById(R.id.progressCameraBar);
-        ///////////////////
+
         typeText = (Button) findViewById(R.id.typeDrugName);
-        typeText.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                AlertDialog.Builder mBuilder = new AlertDialog.Builder(OcrCaptureActivity.this);
-                View mView = getLayoutInflater().inflate(R.layout.dialog_type_drug, null);
-                final EditText mDrugName = (EditText) mView.findViewById(R.id.viewForEditingDrug);
-                final Button mSearch = (Button) mView.findViewById(R.id.goToInteractions);
-                mSearch.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View view) {
 
-                        if (!mDrugName.getText().toString().isEmpty()) {
-                            Toast.makeText(OcrCaptureActivity.this, "Please wait, it is opening...", Toast.LENGTH_LONG).show();
-                            new Thread(new Runnable() {
-                                @Override
-                                public void run() {
-                                    if (getIntent().getStringExtra("info").contains("Food")) {
-                                        Intent intent = new Intent(OcrCaptureActivity.this, FoodInteractionsActivity.class);
-                                        intent.putExtra("text_view", mDrugName.getText().toString().trim());
-                                        startActivity(intent);
-                                    } else {
-                                        Intent intent = new Intent(OcrCaptureActivity.this, DrugInteractionsActivity.class);
-                                        intent.putExtra("text_view", mDrugName.getText().toString().trim());
-                                        startActivity(intent);
-                                    }
-
-                                }
-                            }).start();
-
+        typeText.setOnClickListener(viewOne -> {
+            AlertDialog.Builder mBuilder = new AlertDialog.Builder(OcrCaptureActivity.this);
+            View mView = getLayoutInflater().inflate(R.layout.dialog_type_drug, null);
+            final EditText mDrugName = (EditText) mView.findViewById(R.id.viewForEditingDrug);
+            final Button mSearch = (Button) mView.findViewById(R.id.goToInteractions);
+            mSearch.setOnClickListener(viewTwo -> {
+                if (!mDrugName.getText().toString().isEmpty()) {
+                    Toast.makeText(OcrCaptureActivity.this, "Please wait, it is opening...", Toast.LENGTH_LONG).show();
+                    new Thread(() -> {
+                        if (getIntent().getStringExtra("info").contains("Food")) {
+                            Intent intent = new Intent(OcrCaptureActivity.this, FoodInteractionsActivity.class);
+                            intent.putExtra("text_view", mDrugName.getText().toString().trim());
+                            startActivity(intent);
                         } else {
-                            Toast.makeText(OcrCaptureActivity.this, "Please enter something", Toast.LENGTH_SHORT).show();
+                            Intent intent = new Intent(OcrCaptureActivity.this, DrugInteractionsActivity.class);
+                            intent.putExtra("text_view", mDrugName.getText().toString().trim());
+                            startActivity(intent);
                         }
-                    }
-                });
-                mBuilder.setView(mView);
-                AlertDialog dialog = mBuilder.create();
-                dialog.show();
-            }
+                    }).start();
+
+                } else {
+                    Toast.makeText(OcrCaptureActivity.this, "Please enter something", Toast.LENGTH_SHORT).show();
+                }
+            });
+            mBuilder.setView(mView);
+            AlertDialog dialog = mBuilder.create();
+            dialog.show();
         });
         Intent intent = getIntent();
         usersDrugs = intent.getStringArrayListExtra("users_drugs");
@@ -184,29 +170,11 @@ public final class OcrCaptureActivity extends AppCompatActivity {
         } catch (IOException e) {
             e.printStackTrace();
         }
-//        InputStream inputStream = getResources().openRawResource(R.raw.test_8_output);
-//        InputStreamReader inputStreamReader = new InputStreamReader(inputStream);
-//        BufferedReader bufferedReader = new BufferedReader(inputStreamReader);
-//        try {
-//            String line = bufferedReader.readLine();
-//            Log.i(TAG, line);
-//        } catch (IOException e) {
-//            e.printStackTrace();
-//        }
-//
-//        try {
-//            String[] strings = returning();
-//            strings[1] = "hello";
-//        } catch (IOException e) {
-//            e.printStackTrace();
-//        }
-        ///////////////////
-//
+
         recyclerView = (RecyclerView) findViewById(R.id.recycler_camera_view);
 
 
         preview = (CameraSourcePreview) findViewById(R.id.preview);
-//        textView = (TextView) findViewById(R.id.testing_ocr_detector);
 
         graphicOverlay = (GraphicOverlay<OcrGraphic>) findViewById(R.id.graphicOverlay);
 
@@ -269,13 +237,8 @@ public final class OcrCaptureActivity extends AppCompatActivity {
 
         final Activity thisActivity = this;
 
-        View.OnClickListener listener = new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                ActivityCompat.requestPermissions(thisActivity, permissions,
-                        RC_HANDLE_CAMERA_PERM);
-            }
-        };
+        View.OnClickListener listener = view -> ActivityCompat.requestPermissions(thisActivity, permissions,
+                RC_HANDLE_CAMERA_PERM);
 
         Snackbar.make(graphicOverlay, R.string.permission_camera_rationale,
                 Snackbar.LENGTH_INDEFINITE)

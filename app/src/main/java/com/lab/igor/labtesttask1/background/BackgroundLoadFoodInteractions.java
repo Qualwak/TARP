@@ -10,26 +10,22 @@ import android.view.View;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
-import com.lab.igor.labtesttask1.adapter.SearchAdapter2;
+import com.lab.igor.labtesttask1.adapter.SearchFoodInteractionsAdapter;
 import com.lab.igor.labtesttask1.db.DatabaseHelper;
-import com.lab.igor.labtesttask1.model.FoodInteractions;
+import com.lab.igor.labtesttask1.model.FoodInteraction;
 
 import java.util.ArrayList;
 import java.util.Locale;
 
-/**
- * Created by Igor on 21-May-18.
- */
-
-public class BackgroundLoadFoodInteractions extends AsyncTask<Void, FoodInteractions, Void> {
+public class BackgroundLoadFoodInteractions extends AsyncTask<Void, FoodInteraction, Void> {
 
     private RecyclerView recyclerView;
     private ProgressBar progressBar;
     private Context context;
     private TextView textView;
     private int numberOfInteractions = 0;
-    private SearchAdapter2 adapter;
-    private ArrayList<FoodInteractions> foodInteractions = new ArrayList<FoodInteractions>();
+    private SearchFoodInteractionsAdapter adapter;
+    private ArrayList<FoodInteraction> foodInteractions = new ArrayList<FoodInteraction>();
     private String drugName;
 
 
@@ -45,7 +41,7 @@ public class BackgroundLoadFoodInteractions extends AsyncTask<Void, FoodInteract
     //in main UI thread
     @Override
     protected void onPreExecute() {
-        adapter = new SearchAdapter2(foodInteractions);
+        adapter = new SearchFoodInteractionsAdapter(foodInteractions);
         recyclerView.setAdapter(adapter);
         progressBar.setVisibility(View.VISIBLE);
     }
@@ -68,16 +64,8 @@ public class BackgroundLoadFoodInteractions extends AsyncTask<Void, FoodInteract
             do {
                 numberOfInteractions++;
                 interaction = cursor.getString(cursor.getColumnIndex("interaction"));
-                publishProgress(new FoodInteractions(interaction));
-                /*try {
-                    Thread.sleep(500);
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
-                }*/
-
+                publishProgress(new FoodInteraction(interaction));
             } while (cursor.moveToNext());
-
-
         }
 
         cursor.close();
@@ -88,7 +76,7 @@ public class BackgroundLoadFoodInteractions extends AsyncTask<Void, FoodInteract
 
     //in main UI thread
     @Override
-    protected void onProgressUpdate(FoodInteractions... values) {
+    protected void onProgressUpdate(FoodInteraction... values) {
         foodInteractions.add(values[0]);
         adapter.notifyDataSetChanged();
     }
@@ -96,18 +84,6 @@ public class BackgroundLoadFoodInteractions extends AsyncTask<Void, FoodInteract
     //in main UI thread
     @Override
     protected void onPostExecute(Void aVoid) {
-//        if (numberOfInteractions == 1)
-//            textView.setText(numberOfInteractions + " food interaction with " + drugName);
-//        else textView.setText(numberOfInteractions + " food interactions with " + drugName);
-
-
-//        StringBuilder stringBuilder = new StringBuilder();
-//        stringBuilder.append(numberOfInteractions);
-//        if (numberOfInteractions == 1) stringBuilder.append(" food interaction with ");
-//        else stringBuilder.append(" food interactions with ");
-//        stringBuilder.append(drugName);
-//        textView.setText(stringBuilder);
-
         String pattern = numberOfInteractions == 1 ? "" : "s";
         textView.setText(String.format(Locale.ENGLISH, "%d food interaction%s with %s",
                 numberOfInteractions, pattern, drugName));

@@ -19,18 +19,13 @@ import java.util.List;
 
 import static android.content.Context.MODE_PRIVATE;
 
-/**
- * Created by Igor on 06-Apr-18.
- * For search field
- */
-
-class SearchViewHolder extends RecyclerView.ViewHolder {
+class SearchViewDrugsHolder extends RecyclerView.ViewHolder {
 
     public TextView name, description, type;
     public Button buttonSave;
 
 
-    public SearchViewHolder(View itemView) {
+    public SearchViewDrugsHolder(View itemView) {
         super(itemView);
         // connect our fields in design with Model's fields
         name = (TextView) itemView.findViewById(R.id.name);
@@ -43,37 +38,29 @@ class SearchViewHolder extends RecyclerView.ViewHolder {
 
 }
 
-public class SearchAdapter extends RecyclerView.Adapter<SearchViewHolder> {
+public class SearchDrugsAdapter extends RecyclerView.Adapter<SearchViewDrugsHolder> {
 
     private Context context;
-    //private List<Drug> drugs;
     private List<String> drugs;
     private ArrayList<String> list;
 
-//    public SearchAdapter(Context context, List<Drug> drugs, ArrayList<String> list) {
-//        this.context = context;
-//        this.drugs = drugs;
-//        this.list = list;
-//    }
-
-    public SearchAdapter(Context context, ArrayList<String> drugs, ArrayList<String> list) {
+    public SearchDrugsAdapter(Context context, List<String> drugs, ArrayList<String> list) {
         this.context = context;
         this.drugs = drugs;
         this.list = list;
     }
 
-
     // list Of searched items
     @Override
-    public SearchViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+    public SearchViewDrugsHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         LayoutInflater inflater = LayoutInflater.from(parent.getContext());
         View itemView = inflater.inflate(R.layout.layout_item, parent, false);
 
-        return new SearchViewHolder(itemView);
+        return new SearchViewDrugsHolder(itemView);
     }
 
     @Override
-    public void onBindViewHolder(final SearchViewHolder holder, final int position) {
+    public void onBindViewHolder(final SearchViewDrugsHolder holder, final int position) {
 //        holder.name.setText(drugs.get(position).getName());
         holder.name.setText(drugs.get(position));
 

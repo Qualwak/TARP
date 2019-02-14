@@ -6,21 +6,15 @@ import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteQueryBuilder;
 
 import com.lab.igor.labtesttask1.model.Drug;
-import com.lab.igor.labtesttask1.model.FoodInteractions;
+import com.lab.igor.labtesttask1.model.FoodInteraction;
 import com.readystatesoftware.sqliteasset.SQLiteAssetHelper;
 
 import java.util.ArrayList;
 import java.util.List;
 
-/**
- * Created by Igor on 06-Apr-18.
- * With help of this Class we can get needed list with drug names, descriptions, interactions.
- */
-
 public class DatabaseHelper extends SQLiteAssetHelper {
 
     private static final String DB_NAME = "drugDB.db";
-    //private static final String DB_NAME = "drugDB.db";
     private static final int DB_VER = 1;
 
 
@@ -154,7 +148,7 @@ public class DatabaseHelper extends SQLiteAssetHelper {
 //        return result;
     //  }
 
-    public List<FoodInteractions> getFoodInteractionsByDrugName(String name) {
+    public List<FoodInteraction> getFoodInteractionsByDrugName(String name) {
         SQLiteDatabase db = getReadableDatabase();
         SQLiteQueryBuilder qb = new SQLiteQueryBuilder();
 
@@ -163,11 +157,11 @@ public class DatabaseHelper extends SQLiteAssetHelper {
         qb.setTables(tableName);
 
         Cursor cursor = qb.query(db, sqlSelect, "drugs.name LIKE ? OR drugs.synonyms LIKE ?", new String[]{"%" + name + "%", "%" + name + "%"}, null, null, null);
-        List<FoodInteractions> result = new ArrayList<FoodInteractions>();
+        List<FoodInteraction> result = new ArrayList<FoodInteraction>();
 
         if (cursor.moveToFirst()) {
             do {
-                FoodInteractions foodInteractions = new FoodInteractions();
+                FoodInteraction foodInteractions = new FoodInteraction();
                 foodInteractions.setInteraction(cursor.getString(cursor.getColumnIndex("interaction")));
 
                 result.add(foodInteractions);

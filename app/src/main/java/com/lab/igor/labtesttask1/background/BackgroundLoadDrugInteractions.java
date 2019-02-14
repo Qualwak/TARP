@@ -14,31 +14,27 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.google.gson.Gson;
-import com.lab.igor.labtesttask1.adapter.SearchAdapter4;
+import com.lab.igor.labtesttask1.adapter.SearchDrugInteractionsAdapter;
 import com.lab.igor.labtesttask1.db.DatabaseHelper;
-import com.lab.igor.labtesttask1.model.DrugInteractionsN;
+import com.lab.igor.labtesttask1.model.DrugInteraction;
 import com.mancj.materialsearchbar.MaterialSearchBar;
 
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Locale;
 
-/**
- * Created by Igor on 21-May-18.
- */
-
-public class BackgroundLoadDrugInteractions extends AsyncTask<Void, DrugInteractionsN, Void> {
+public class BackgroundLoadDrugInteractions extends AsyncTask<Void, DrugInteraction, Void> {
     private RecyclerView recyclerView;
     private ProgressBar progressBar;
     private Context context;
     private TextView textView;
     private int numberOfInteractions = 0;
-    private SearchAdapter4 adapter;
-    private ArrayList<DrugInteractionsN> drugInteractionsNS = new ArrayList<DrugInteractionsN>();
+    private SearchDrugInteractionsAdapter adapter;
+    private ArrayList<DrugInteraction> drugInteractions = new ArrayList<DrugInteraction>();
     private String drugName;
     private static final String TAG = "myLogs";
     private ArrayList<String> drugInteractionNames = new ArrayList<String>();
-    private ArrayList<DrugInteractionsN> interactedDrugs = new ArrayList<DrugInteractionsN>();
+    private ArrayList<DrugInteraction> interactedDrugs = new ArrayList<DrugInteraction>();
     private MaterialSearchBar materialSearchBar;
 
 
@@ -56,7 +52,7 @@ public class BackgroundLoadDrugInteractions extends AsyncTask<Void, DrugInteract
     //in main UI thread
     @Override
     protected void onPreExecute() {
-        adapter = new SearchAdapter4(drugInteractionsNS);
+        adapter = new SearchDrugInteractionsAdapter(drugInteractions);
         recyclerView.setAdapter(adapter);
         progressBar.setVisibility(View.VISIBLE);
     }
@@ -82,14 +78,9 @@ public class BackgroundLoadDrugInteractions extends AsyncTask<Void, DrugInteract
                 Log.i(TAG, "number for now" + (++i));
                 description = cursor.getString(cursor.getColumnIndex("drug2_name"));
                 nameOfDrugInteraction = cursor.getString(cursor.getColumnIndex("description"));
-                publishProgress(new DrugInteractionsN(description, nameOfDrugInteraction));
+                publishProgress(new DrugInteraction(description, nameOfDrugInteraction));
                 drugInteractionNames.add(description);
-                interactedDrugs.add(new DrugInteractionsN(description, nameOfDrugInteraction));
-               /* try {
-                    Thread.sleep(500);
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
-                }*/
+                interactedDrugs.add(new DrugInteraction(description, nameOfDrugInteraction));
             } while (cursor.moveToNext());
         }
         passingDrugNames(drugInteractionNames);
@@ -101,8 +92,8 @@ public class BackgroundLoadDrugInteractions extends AsyncTask<Void, DrugInteract
 
     //in main UI thread
     @Override
-    protected void onProgressUpdate(DrugInteractionsN... values) {
-        drugInteractionsNS.add(values[0]);
+    protected void onProgressUpdate(DrugInteraction... values) {
+        drugInteractions.add(values[0]);
         adapter.notifyDataSetChanged();
     }
 
@@ -112,7 +103,6 @@ public class BackgroundLoadDrugInteractions extends AsyncTask<Void, DrugInteract
         materialSearchBar.setLastSuggestions(drugInteractionNames);
 
         String pattern = numberOfInteractions == 1 ? "" : "s";
-
         textView.setText(String.format(Locale.ENGLISH, "%d drug interaction%s with %s",
                 numberOfInteractions, pattern, drugName));
 
@@ -129,13 +119,12 @@ public class BackgroundLoadDrugInteractions extends AsyncTask<Void, DrugInteract
         editor.apply();
     }
 
-    private void passingInteractedDrugs(ArrayList<DrugInteractionsN> interactedDrugs) {
+    private void passingInteractedDrugs(ArrayList<DrugInteraction> interactedDrugs) {
         SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(context);
         SharedPreferences.Editor editor = preferences.edit();
 
-        Gson gson = new Gson();
+        String jsonDrugs = new Gson().toJson(interactedDrugs);
 
-        String jsonDrugs = gson.toJson(interactedDrugs);
         editor.putString("interacted_drugs", jsonDrugs);
         editor.apply();
     }

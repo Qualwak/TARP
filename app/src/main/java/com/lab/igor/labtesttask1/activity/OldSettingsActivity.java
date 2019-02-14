@@ -33,21 +33,13 @@ public class OldSettingsActivity extends AppCompatActivity implements View.OnCli
         settings.setOnClickListener(this);
 
         profile = findViewById(R.id.profile);
-        profile.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(OldSettingsActivity.this, ProfileActivity.class);
-                startActivity(intent);
-            }
+        profile.setOnClickListener(view -> {
+            startActivity(new Intent(OldSettingsActivity.this, ProfileActivity.class));
         });
 
         instructions = findViewById(R.id.instructions);
-        instructions.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                speak();
-            }
-        });
+        instructions.setOnClickListener(view -> speak());
+
         AccessibilityManager am = (AccessibilityManager) getSystemService(ACCESSIBILITY_SERVICE);
         boolean isAccessibilityEnabled = am.isEnabled();
         boolean isExploreByTouchEnabled = am.isTouchExplorationEnabled();
@@ -65,9 +57,8 @@ public class OldSettingsActivity extends AppCompatActivity implements View.OnCli
                     int result = textToSpeech.setLanguage(Locale.ENGLISH);
                     if (result == TextToSpeech.LANG_MISSING_DATA ||
                             result == TextToSpeech.LANG_NOT_SUPPORTED) {
-                        Toast.makeText(OldSettingsActivity.this, "This language is not supported", Toast.LENGTH_SHORT);
+                        Toast.makeText(OldSettingsActivity.this, "This language is not supported", Toast.LENGTH_SHORT).show();
                     } else {
-
                         textToSpeech.setPitch(0.6f);
                         textToSpeech.setSpeechRate(1.0f);
 //                        speak();
@@ -106,9 +97,6 @@ public class OldSettingsActivity extends AppCompatActivity implements View.OnCli
             case R.id.setting_speech:
                 startActivityForResult(new Intent(Settings.ACTION_ACCESSIBILITY_SETTINGS), 0);
                 break;
-//            case R.id.instructions:
-//                speak();
-//                break;
             default:
                 break;
         }

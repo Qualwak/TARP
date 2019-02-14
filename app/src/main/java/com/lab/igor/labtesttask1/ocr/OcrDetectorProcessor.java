@@ -13,14 +13,13 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.lab.igor.labtesttask1;
+package com.lab.igor.labtesttask1.ocr;
 
 import android.os.Handler;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.util.SparseArray;
-import android.widget.TextView;
 
 import com.lab.igor.labtesttask1.activity.OcrCaptureActivity;
 import com.lab.igor.labtesttask1.adapter.MyRecyclerViewAdapter;
@@ -29,11 +28,8 @@ import com.google.android.gms.vision.Detector;
 import com.google.android.gms.vision.text.TextBlock;
 
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collections;
 import java.util.List;
 import java.util.Map;
-import java.util.stream.Collectors;
 
 /**
  * A very simple Processor which gets detected TextBlocks and adds them to the overlay
@@ -85,13 +81,9 @@ public class OcrDetectorProcessor implements Detector.Processor<TextBlock> {
                     if (mapDrugs.get(nextArray.toLowerCase()) != null) {
                         Log.d("OcrDetectorProcessor", nextArray);
 
-                        Log.d("OcrDetectorProcessor", "HERE 1");
-
                         if (usersDrugs != null && usersDrugs.contains(nextArray.substring(0, 1).toUpperCase() + nextArray.substring(1).toLowerCase())) {
                             drugsCamera.add(nextArray + mapDrugs.get(nextArray.toLowerCase()) + nextArray);
-                            Log.d("OcrDetectorProcessor", "HERE 2");
                         } else {
-                            Log.d("OcrDetectorProcessor", "HERE 3");
                             drugsCamera.add(nextArray + mapDrugs.get(nextArray.toLowerCase()) + nextArray);
                         }
                     }
@@ -131,10 +123,5 @@ public class OcrDetectorProcessor implements Detector.Processor<TextBlock> {
         }
         return false;
     }
-
-//    private static boolean binarySearch(String[] strings, String value) {
-//        String values = value.split("\n")[0].split(" ")[0];
-////        return Collections.binarySearch(Arrays.asList(strings), values);
-//    }
 
 }

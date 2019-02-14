@@ -1,26 +1,20 @@
 package com.lab.igor.labtesttask1.model;
 
-/**
- * Created by Igor on 20-May-18.
- */
-
-public class FoodInteractions {
+public class FoodInteraction {
 
     private int id;
     private String drugName;
     private String interaction;
 
-    public FoodInteractions() {
+    public FoodInteraction() {}
 
-    }
-
-    public FoodInteractions(int id, String drugName, String interaction) {
+    public FoodInteraction(int id, String drugName, String interaction) {
         this.id = id;
         this.drugName = drugName;
         this.interaction = interaction;
     }
 
-    public FoodInteractions(String interaction) {
+    public FoodInteraction(String interaction) {
         this.interaction = interaction;
     }
 

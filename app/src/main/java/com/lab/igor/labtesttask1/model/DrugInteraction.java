@@ -1,43 +1,45 @@
 package com.lab.igor.labtesttask1.model;
 
-/**
- * Created by Igor on 09-Apr-18.
- * Drug Interaction Model for searching needed interactions
- */
-
 public class DrugInteraction {
+    private int id, drug1Id, drug2Id;
+    private String description, nameOfDrugInteraction;
 
+    public DrugInteraction() {}
 
-    private String name;
-    private String drugName;
-    private String description;
-
-    public String getDrugName() {
-        return drugName;
+    public DrugInteraction(String description, String nameOfDrugInteraction) {
+        this.description = description;
+        this.nameOfDrugInteraction = nameOfDrugInteraction;
     }
 
-    public void setDrugName(String drugName) {
-        this.drugName = drugName;
-    }
-
-    public DrugInteraction(String name, String drugName, String description) {
-        this.name = name;
-        this.drugName = drugName;
-
+    public DrugInteraction(int id, int drug1Id, int drug2Id, String description) {
+        this.id = id;
+        this.drug1Id = drug1Id;
+        this.drug2Id = drug2Id;
         this.description = description;
     }
 
-    public DrugInteraction() {
-
+    public int getId() {
+        return id;
     }
 
-
-    public String getName() {
-        return name;
+    public void setId(int id) {
+        this.id = id;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public int getDrug1Id() {
+        return drug1Id;
+    }
+
+    public void setDrug1Id(int drug1Id) {
+        this.drug1Id = drug1Id;
+    }
+
+    public int getDrug2Id() {
+        return drug2Id;
+    }
+
+    public void setDrug2Id(int drug2Id) {
+        this.drug2Id = drug2Id;
     }
 
     public String getDescription() {
@@ -46,5 +48,13 @@ public class DrugInteraction {
 
     public void setDescription(String description) {
         this.description = description;
+    }
+
+    public String getNameOfDrugInteraction() {
+        return nameOfDrugInteraction;
+    }
+
+    public void setNameOfDrugInteraction(String nameOfDrugInteraction) {
+        this.nameOfDrugInteraction = nameOfDrugInteraction;
     }
 }

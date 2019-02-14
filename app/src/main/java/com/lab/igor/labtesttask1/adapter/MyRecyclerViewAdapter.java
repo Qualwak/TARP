@@ -17,10 +17,6 @@ import com.lab.igor.labtesttask1.R;
 
 import java.util.List;
 
-/**
- * Created by Igor on 24-Jul-18.
- */
-
 public class MyRecyclerViewAdapter extends RecyclerView.Adapter<MyRecyclerViewAdapter.ViewHolder> {
 
     private List<String> mData;

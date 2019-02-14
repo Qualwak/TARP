@@ -18,10 +18,6 @@ import java.util.List;
 
 import static android.content.Context.MODE_PRIVATE;
 
-/**
- * Created by Igor on 24-Jul-18.
- */
-
 public class MyRecyclerViewAdapterProfile extends RecyclerView.Adapter<MyRecyclerViewAdapterProfile.ViewHolder> {
 
     private List<String> mData;
