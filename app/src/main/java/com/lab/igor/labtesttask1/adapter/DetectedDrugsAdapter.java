@@ -17,7 +17,7 @@ import com.lab.igor.labtesttask1.R;
 
 import java.util.List;
 
-public class MyRecyclerViewAdapter extends RecyclerView.Adapter<MyRecyclerViewAdapter.ViewHolder> {
+public class DetectedDrugsAdapter extends RecyclerView.Adapter<DetectedDrugsAdapter.ViewHolder> {
 
     private List<String> mData;
     private List<String> mUsersDrugs;
@@ -26,7 +26,7 @@ public class MyRecyclerViewAdapter extends RecyclerView.Adapter<MyRecyclerViewAd
     private String whereToGo;
 
     // data is passed into the constructor
-    public MyRecyclerViewAdapter(Context context, List<String> data, List<String> usersDrugs, String whereToGo) {
+    public DetectedDrugsAdapter(Context context, List<String> data, List<String> usersDrugs, String whereToGo) {
         this.mInflater = LayoutInflater.from(context);
         this.mData = data;
         this.mUsersDrugs = usersDrugs;

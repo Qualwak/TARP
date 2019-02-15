@@ -50,7 +50,7 @@ import com.google.android.gms.common.GoogleApiAvailability;
 import com.lab.igor.labtesttask1.ocr.OcrDetectorProcessor;
 import com.lab.igor.labtesttask1.ocr.OcrGraphic;
 import com.lab.igor.labtesttask1.R;
-import com.lab.igor.labtesttask1.adapter.MyRecyclerViewAdapter;
+import com.lab.igor.labtesttask1.adapter.DetectedDrugsAdapter;
 import com.lab.igor.labtesttask1.db.DatabaseHelper;
 import com.lab.igor.labtesttask1.camera.CameraSource;
 import com.lab.igor.labtesttask1.camera.CameraSourcePreview;
@@ -90,7 +90,7 @@ public final class OcrCaptureActivity extends AppCompatActivity {
     private CameraSourcePreview preview;
     private GraphicOverlay<OcrGraphic> graphicOverlay;
     TextView textView;
-    MyRecyclerViewAdapter adapter;
+    DetectedDrugsAdapter adapter;
     // Helper objects for detecting taps and pinches.
     private ScaleGestureDetector scaleGestureDetector;
     private GestureDetector gestureDetector;
@@ -159,7 +159,7 @@ public final class OcrCaptureActivity extends AppCompatActivity {
             }
         } else {
             try {
-                map = returningInterMap();
+                map = returningDrugsInterMap();
             } catch (IOException e) {
                 e.printStackTrace();
             }
@@ -278,7 +278,7 @@ public final class OcrCaptureActivity extends AppCompatActivity {
 //            textRecognizer.setProcessor(new OcrDetectorProcessor(graphicOverlay, returning(),/* databaseHelper,*/ returningFoodInterMap(), this, recyclerView, usersDrugs, "Food"));
 //
 //        } else {
-//            textRecognizer.setProcessor(new OcrDetectorProcessor(graphicOverlay, returning(),/* databaseHelper,*/ returningInterMap(), this, recyclerView, usersDrugs, "Drug"));
+//            textRecognizer.setProcessor(new OcrDetectorProcessor(graphicOverlay, returning(),/* databaseHelper,*/ returningDrugsInterMap(), this, recyclerView, usersDrugs, "Drug"));
 //        }
         textRecognizer.setProcessor(new OcrDetectorProcessor(graphicOverlay, drugs,/* databaseHelper,*/ map, this, recyclerView, usersDrugs, getIntent().getStringExtra("info")));
 
@@ -541,7 +541,7 @@ public final class OcrCaptureActivity extends AppCompatActivity {
         return strings;
     }
 
-    public Map<String, String> returningInterMap() throws IOException {
+    public Map<String, String> returningDrugsInterMap() throws IOException {
         InputStream inputStream = getResources().openRawResource(R.raw.test_2);
         InputStreamReader inputStreamReader = new InputStreamReader(inputStream);
         BufferedReader bufferedReader = new BufferedReader(inputStreamReader);

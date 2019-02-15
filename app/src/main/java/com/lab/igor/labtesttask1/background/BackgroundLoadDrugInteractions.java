@@ -81,11 +81,19 @@ public class BackgroundLoadDrugInteractions extends AsyncTask<Void, DrugInteract
                 do {
                     numberOfInteractions++;
                     Log.i(TAG, "number for now" + (++i));
-                    description = cursor.getString(cursor.getColumnIndex("drug2_name"));
-                    nameOfDrugInteraction = cursor.getString(cursor.getColumnIndex("description"));
-                    publishProgress(new DrugInteraction(description, nameOfDrugInteraction));
-                    drugInteractionNames.add(description);
-                    interactedDrugs.add(new DrugInteraction(description, nameOfDrugInteraction));
+//                    description = cursor.getString(cursor.getColumnIndex("drug2_name"));
+//                    nameOfDrugInteraction = cursor.getString(cursor.getColumnIndex("description"));
+//                    publishProgress(new DrugInteraction(description, nameOfDrugInteraction));
+//                    drugInteractionNames.add(description);
+//                    interactedDrugs.add(new DrugInteraction(description, nameOfDrugInteraction));
+
+                    nameOfDrugInteraction = cursor.getString(cursor.getColumnIndex("drug2_name"));
+                    description = cursor.getString(cursor.getColumnIndex("description"));
+//
+                    publishProgress(new DrugInteraction(nameOfDrugInteraction, description));
+
+                    drugInteractionNames.add(nameOfDrugInteraction);
+                    interactedDrugs.add(new DrugInteraction(nameOfDrugInteraction, description));
                 } while (cursor.moveToNext());
             }
             passingDrugNames(drugInteractionNames);

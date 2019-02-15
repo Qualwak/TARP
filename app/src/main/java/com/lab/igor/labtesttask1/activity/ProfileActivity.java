@@ -21,14 +21,13 @@ import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import com.lab.igor.labtesttask1.PickerDialogs;
 import com.lab.igor.labtesttask1.R;
-import com.lab.igor.labtesttask1.adapter.MyRecyclerViewAdapterProfile;
+import com.lab.igor.labtesttask1.adapter.ProfileDrugsAdapter;
 import com.weiwangcn.betterspinner.library.material.MaterialBetterSpinner;
 
 import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Calendar;
-import java.util.List;
 import java.util.Locale;
 import java.util.Objects;
 
@@ -43,7 +42,7 @@ public class ProfileActivity extends FragmentActivity implements DatePickerDialo
 
     MaterialBetterSpinner materialBetterSpinner;
 
-    MyRecyclerViewAdapterProfile adapter;
+    ProfileDrugsAdapter adapter;
 
     @RequiresApi(api = Build.VERSION_CODES.N)
     @Override
@@ -109,7 +108,7 @@ public class ProfileActivity extends FragmentActivity implements DatePickerDialo
         recyclerView = (RecyclerView) findViewById(R.id.recycler_view_profile_drugs);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
 
-        adapter = new MyRecyclerViewAdapterProfile(getApplicationContext(), drugs);
+        adapter = new ProfileDrugsAdapter(getApplicationContext(), drugs);
 
         recyclerView.setAdapter(adapter);
     }

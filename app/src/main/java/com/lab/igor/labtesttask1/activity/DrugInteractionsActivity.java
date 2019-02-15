@@ -159,14 +159,14 @@ public class DrugInteractionsActivity extends AppCompatActivity {
         else {
 //            List<DrugInteraction> drugsForSearch = new ArrayList<DrugInteraction>();
 //            for (DrugInteraction drug : drugs) {
-//                if (drug.getNameOfDrugInteraction().contains(updatedText)) drugsForSearch.add(drug);
+//                if (drug.getName().contains(updatedText)) drugsForSearch.add(drug);
 //            }
 //
 //            adapter = new SearchDrugInteractionsAdapter(this, drugsForSearch);
 //
 //
             List<DrugInteraction> drugsForSearch = drugs.stream()
-                                                           .filter(drug -> drug.getNameOfDrugInteraction()
+                                                           .filter(drug -> drug.getName()
                                                                           .contains(updatedText))
                                                            .collect(Collectors.toList());
             adapter = new SearchDrugInteractionsAdapter(this, drugsForSearch);

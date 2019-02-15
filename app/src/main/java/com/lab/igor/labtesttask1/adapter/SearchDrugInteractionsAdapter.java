@@ -69,17 +69,21 @@ public class SearchDrugInteractionsAdapter extends RecyclerView.Adapter<SearchVi
 
     @Override
     public void onBindViewHolder(final SearchViewDrugInteractionsHolder holder, final int position) {
-        holder.interactions.setText(drugInteractions.get(position).getDescription());
+//        holder.interactions.setText(drugInteractions.get(position).getDescription());
+        holder.interactions.setText(drugInteractions.get(position).getName());
         holder.description.setText("");
         holder.imgButton.setVisibility(View.VISIBLE);
 
         holder.linearLayout.setOnClickListener(view -> {
-            Log.d(TAG, "onClick: clicked on:" + drugInteractions.get(position).getNameOfDrugInteraction());
+//            Log.d(TAG, "onClick: clicked on:" + drugInteractions.get(position).getName());
+            Log.d(TAG, "onClick: clicked on:" + drugInteractions.get(position).getDescription());
 
-            holder.description.setText("Description: " + drugInteractions.get(position).getNameOfDrugInteraction());
+//            holder.description.setText(String.format("Description: %s",
+//                                     drugInteractions.get(position).getName()));
+            holder.description.setText("Description: " + drugInteractions.get(position).getDescription());
             holder.imgButton.setVisibility(View.INVISIBLE);
             // Intent intent = new Intent(context, DescriptionActivity.class);
-            //intent.putExtra("description", drugInteractionsNS.get(position).getNameOfDrugInteraction());
+            //intent.putExtra("description", drugInteractionsNS.get(position).getName());
             //context.startActivity(intent);
         });
     }

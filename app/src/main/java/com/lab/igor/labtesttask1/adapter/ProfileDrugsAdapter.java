@@ -18,14 +18,14 @@ import java.util.List;
 
 import static android.content.Context.MODE_PRIVATE;
 
-public class MyRecyclerViewAdapterProfile extends RecyclerView.Adapter<MyRecyclerViewAdapterProfile.ViewHolder> {
+public class ProfileDrugsAdapter extends RecyclerView.Adapter<ProfileDrugsAdapter.ViewHolder> {
 
     private List<String> mData;
     private LayoutInflater mInflater;
     private ItemClickListener mClickListener;
 
     // data is passed into the constructor
-    public MyRecyclerViewAdapterProfile(Context context, List<String> data) {
+    public ProfileDrugsAdapter(Context context, List<String> data) {
         this.mInflater = LayoutInflater.from(context);
         this.mData = data;
     }

@@ -22,7 +22,7 @@ import android.util.Log;
 import android.util.SparseArray;
 
 import com.lab.igor.labtesttask1.activity.OcrCaptureActivity;
-import com.lab.igor.labtesttask1.adapter.MyRecyclerViewAdapter;
+import com.lab.igor.labtesttask1.adapter.DetectedDrugsAdapter;
 import com.lab.igor.labtesttask1.camera.GraphicOverlay;
 import com.google.android.gms.vision.Detector;
 import com.google.android.gms.vision.text.TextBlock;
@@ -43,7 +43,7 @@ public class OcrDetectorProcessor implements Detector.Processor<TextBlock> {
     private String[] drugStrings;
     private ArrayList<String> usersDrugs;
     private Map<String, String> mapDrugs;
-    private MyRecyclerViewAdapter adapter;
+    private DetectedDrugsAdapter adapter;
     private String whereToGo;
 
     public OcrDetectorProcessor(GraphicOverlay<OcrGraphic> ocrGraphicOverlay, String[] strings,/* DatabaseHelper databaseHelper,*/ Map<String, String> mapDrugs, OcrCaptureActivity ocrCaptureActivity, RecyclerView recyclerView, ArrayList<String> usersDrugs, String whereToGo) {
@@ -94,7 +94,7 @@ public class OcrDetectorProcessor implements Detector.Processor<TextBlock> {
                     @Override
                     public void run() {
                         recyclerView.setLayoutManager(new LinearLayoutManager(ocrCaptureActivity));
-                        adapter = new MyRecyclerViewAdapter(ocrCaptureActivity, drugsCamera, usersDrugs, whereToGo);
+                        adapter = new DetectedDrugsAdapter(ocrCaptureActivity, drugsCamera, usersDrugs, whereToGo);
                         recyclerView.setAdapter(adapter);
                     }
                 });
