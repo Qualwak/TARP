@@ -6,7 +6,9 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteQueryBuilder;
 import android.os.AsyncTask;
+import android.os.Build;
 import android.preference.PreferenceManager;
+import android.support.annotation.RequiresApi;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.View;
@@ -16,12 +18,14 @@ import android.widget.TextView;
 import com.google.gson.Gson;
 import com.lab.igor.labtesttask1.adapter.SearchDrugInteractionsAdapter;
 import com.lab.igor.labtesttask1.db.DatabaseHelper;
+import com.lab.igor.labtesttask1.db.DatabaseHelperNew;
 import com.lab.igor.labtesttask1.model.DrugInteraction;
 import com.mancj.materialsearchbar.MaterialSearchBar;
 
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Locale;
+import java.util.Objects;
 
 public class BackgroundLoadDrugInteractions extends AsyncTask<Void, DrugInteraction, Void> {
     private RecyclerView recyclerView;
@@ -58,35 +62,41 @@ public class BackgroundLoadDrugInteractions extends AsyncTask<Void, DrugInteract
     }
 
     //in separate background thread
+    @RequiresApi(api = Build.VERSION_CODES.N)
     @Override
     protected Void doInBackground(Void... voids) {
-        DatabaseHelper databaseHelper = new DatabaseHelper(context);
-
-        SQLiteDatabase db = databaseHelper.getReadableDatabase();
+        SQLiteDatabase db = DatabaseHelperNew.getInstance(context).getReadableDatabase();
         SQLiteQueryBuilder qb = new SQLiteQueryBuilder();
+        Cursor cursor = null;
+        try {
+            String[] sqlSelect = {"drug_interactions.description, drugs2.name AS drug2_name"};
+            String tableName = "drug_interactions INNER JOIN drugs on drug_interactions.drug1_id = drugs.id INNER JOIN drugs AS drugs2 ON drugs2.id = drug_interactions.drug2_id";
+            qb.setTables(tableName);
 
-        String[] sqlSelect = {"drug_interactions.description, drugs2.name AS drug2_name"};
-        String tableName = "drug_interactions INNER JOIN drugs on drug_interactions.drug1_id = drugs.id INNER JOIN drugs AS drugs2 ON drugs2.id = drug_interactions.drug2_id";
-        qb.setTables(tableName);
+            cursor = qb.query(db, sqlSelect, "drugs.name LIKE ? OR drugs.synonyms LIKE ?", new String[] {"%"+drugName+"%", "%"+drugName+"%"}, null, null, null);
 
-        Cursor cursor = qb.query(db, sqlSelect, "drugs.name LIKE ? OR drugs.synonyms LIKE ?", new String[] {"%"+drugName+"%", "%"+drugName+"%"}, null, null, null);
-        String description, nameOfDrugInteraction;
-        int i = 0;
-        if (cursor.moveToFirst()) {
-            do {
-                numberOfInteractions++;
-                Log.i(TAG, "number for now" + (++i));
-                description = cursor.getString(cursor.getColumnIndex("drug2_name"));
-                nameOfDrugInteraction = cursor.getString(cursor.getColumnIndex("description"));
-                publishProgress(new DrugInteraction(description, nameOfDrugInteraction));
-                drugInteractionNames.add(description);
-                interactedDrugs.add(new DrugInteraction(description, nameOfDrugInteraction));
-            } while (cursor.moveToNext());
+            String description, nameOfDrugInteraction;
+            int i = 0;
+            if (cursor.moveToFirst()) {
+                do {
+                    numberOfInteractions++;
+                    Log.i(TAG, "number for now" + (++i));
+                    description = cursor.getString(cursor.getColumnIndex("drug2_name"));
+                    nameOfDrugInteraction = cursor.getString(cursor.getColumnIndex("description"));
+                    publishProgress(new DrugInteraction(description, nameOfDrugInteraction));
+                    drugInteractionNames.add(description);
+                    interactedDrugs.add(new DrugInteraction(description, nameOfDrugInteraction));
+                } while (cursor.moveToNext());
+            }
+            passingDrugNames(drugInteractionNames);
+            passingInteractedDrugs(interactedDrugs);
+
+        } finally {
+            Objects.requireNonNull(cursor);
+            cursor.close();
+            DatabaseHelperNew.getInstance(context).close();
         }
-        passingDrugNames(drugInteractionNames);
-        passingInteractedDrugs(interactedDrugs);
-        cursor.close();
-        databaseHelper.close();
+
         return null;
     }
 

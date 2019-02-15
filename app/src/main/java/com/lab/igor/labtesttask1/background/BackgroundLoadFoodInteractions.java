@@ -5,6 +5,8 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteQueryBuilder;
 import android.os.AsyncTask;
+import android.os.Build;
+import android.support.annotation.RequiresApi;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.ProgressBar;
@@ -12,11 +14,14 @@ import android.widget.TextView;
 
 import com.lab.igor.labtesttask1.adapter.SearchFoodInteractionsAdapter;
 import com.lab.igor.labtesttask1.db.DatabaseHelper;
+import com.lab.igor.labtesttask1.db.DatabaseHelperNew;
 import com.lab.igor.labtesttask1.model.FoodInteraction;
 
 import java.util.ArrayList;
 import java.util.Locale;
+import java.util.Objects;
 
+@RequiresApi(api = Build.VERSION_CODES.N)
 public class BackgroundLoadFoodInteractions extends AsyncTask<Void, FoodInteraction, Void> {
 
     private RecyclerView recyclerView;
@@ -49,30 +54,36 @@ public class BackgroundLoadFoodInteractions extends AsyncTask<Void, FoodInteract
     //in separate background thread
     @Override
     protected Void doInBackground(Void... voids) {
-        DatabaseHelper databaseHelper = new DatabaseHelper(context);
-        SQLiteDatabase db = databaseHelper.getReadableDatabase();
         SQLiteQueryBuilder qb = new SQLiteQueryBuilder();
+        SQLiteDatabase db = DatabaseHelperNew.getInstance(context).getReadableDatabase();
+        Cursor cursor = null;
+        try {
+            String[] sqlSelect = {"interaction"};
+            String tableName = "food_interactions INNER JOIN drugs on drugs.name = food_interactions.drug_name";
+            qb.setTables(tableName);
 
-        String[] sqlSelect = {"interaction"};
-        String tableName = "food_interactions INNER JOIN drugs on drugs.name = food_interactions.drug_name";
-        qb.setTables(tableName);
+            cursor = qb.query(db, sqlSelect, "drugs.name LIKE ? OR drugs.synonyms LIKE ?",
+                    new String[]{"%" + drugName + "%", "%" + drugName + "%"}, null,
+                    null, null);
 
-        Cursor cursor = qb.query(db, sqlSelect, "drugs.name LIKE ? OR drugs.synonyms LIKE ?", new String[]{"%" + drugName + "%", "%" + drugName + "%"}, null, null, null);
-        String interaction;
+            String interaction;
 
-        if (cursor.moveToFirst()) {
-            do {
-                numberOfInteractions++;
-                interaction = cursor.getString(cursor.getColumnIndex("interaction"));
-                publishProgress(new FoodInteraction(interaction));
-            } while (cursor.moveToNext());
+            if (cursor.moveToFirst()) {
+                do {
+                    numberOfInteractions++;
+                    interaction = cursor.getString(cursor.getColumnIndex("interaction"));
+                    publishProgress(new FoodInteraction(interaction));
+                } while (cursor.moveToNext());
+            }
+        } finally {
+            Objects.requireNonNull(cursor, "");
+            cursor.close();
+            DatabaseHelperNew.getInstance(context).close();
         }
 
-        cursor.close();
-        databaseHelper.close();
         return null;
-    }
 
+    }
 
     //in main UI thread
     @Override
