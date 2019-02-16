@@ -12,6 +12,5 @@ public class DrugInteraction {
     public DrugInteraction(String nameOfDrugInteraction, String description) {
         this.name = nameOfDrugInteraction;
         this.description = description;
-
     }
 }

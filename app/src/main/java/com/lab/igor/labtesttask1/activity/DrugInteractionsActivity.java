@@ -29,16 +29,19 @@ import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
 
+@RequiresApi(api = Build.VERSION_CODES.N)
 public class DrugInteractionsActivity extends AppCompatActivity {
 
     private static final String TAG = "DrugInteractions";
     RecyclerView recyclerView;
-    ProgressBar progressBar;
     RecyclerView.LayoutManager layoutManager;
     SearchDrugInteractionsAdapter adapter;
+
+    ProgressBar progressBar;
+
     TextView textView;
     TextView numberOfInteractions;
-    boolean progress;
+
     private static byte whereToGo = 0;
 
     MaterialSearchBar materialSearchBar;
@@ -56,35 +59,22 @@ public class DrugInteractionsActivity extends AppCompatActivity {
         textView = (TextView) findViewById(R.id.text_found);
         progressBar = (ProgressBar) findViewById(R.id.progressBarDrugInteractions);
         numberOfInteractions = (TextView) findViewById(R.id.number_of_interactions);
-        progress = false;
 
 
-        Intent intent2 = getIntent();
-        String test_cut = intent2.getStringExtra("text_view");
-        final String[] answer_cut = test_cut.split("[\\n\\s]");
-        answer_cut[0] = answer_cut[0].substring(0, 1).toUpperCase() + answer_cut[0].substring(1).toLowerCase();
-        textView.setText(answer_cut[0]);
+        String label = getIntent().getStringExtra("text_view").split("[\\n\\s]")[0];
+        String formattedLabel = label.substring(0, 1).toUpperCase() + label.substring(1).toLowerCase();
+        textView.setText(formattedLabel);
+
         Log.v(TAG, textView.getText().toString());
 
-        // setup search bar
         materialSearchBar.setHint("Search");
 
-
-        //materialSearchBar.setText(intent.getStringExtra("text_view"));
-        //materialSearchBar.setCardViewElevation(10);
         loadSuggestList();
-
 
         materialSearchBar.addTextChangeListener(new TextWatcher() {
 
-
             @Override
-            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-                Log.v(TAG, "BEFORE");
-
-//                recyclerView.setAdapter(adapter);
-//                materialSearchBar.setLastSuggestions(suggestList);
-            }
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {}
 
             @Override
             public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
@@ -94,51 +84,27 @@ public class DrugInteractionsActivity extends AppCompatActivity {
                         suggest.add(search);
                     }
                 }
-                materialSearchBar.setLastSuggestions(suggest);
-                Log.v(TAG, "ON");
-//                if (adapter !=  new SearchDrugInteractionsAdapter(getApplicationContext(), getInteractedDrugs())){
-//                    adapter = new SearchDrugInteractionsAdapter(getApplicationContext(), getInteractedDrugs());
-//                    recyclerView.setAdapter(adapter);
-//                }
 
+                materialSearchBar.setLastSuggestions(suggest);
             }
 
             @Override
-            public void afterTextChanged(Editable editable) {
-                Log.v(TAG, "AFTER");
-//                adapter = new SearchDrugInteractionsAdapter(getApplicationContext(), getInteractedDrugs());
-//                recyclerView.setAdapter(adapter);
-//                materialSearchBar.setLastSuggestions(suggestList);
-            }
+            public void afterTextChanged(Editable editable) {}
         });
+
         materialSearchBar.setOnSearchActionListener(new MaterialSearchBar.OnSearchActionListener() {
             @Override
-            public void onSearchStateChanged(boolean enabled) {
-//                if (!enabled)
-//                    recyclerView.setAdapter(adapter);
-            }
+            public void onSearchStateChanged(boolean enabled) {}
 
-            @RequiresApi(api = Build.VERSION_CODES.N)
             @Override
             public void onSearchConfirmed(CharSequence text) {
                 startSearch(text.toString());
             }
 
             @Override
-            public void onButtonClicked(int buttonCode) {
-                Log.v(TAG, "WHAT IS THE PAGE");
-//                recyclerView.setAdapter(adapter);
-            }
+            public void onButtonClicked(int buttonCode) {}
         });
-        // Intent intent1 = getIntent();
-        // init Adapter default set all result
-        //adapter = new SearchDrugsAdapter(this, databaseHelper.getDrug());
 
-//        if (getInteractedDrugs() != null)
-//            adapter = new SearchDrugInteractionsAdapter(this, getInteractedDrugs());
-//        new BackgroundLoadDrugInteractions(recyclerView, progressBar, this, textView.getText().toString(), numberOfInteractions).execute();
-//        adapter = new SearchDrugInteractionsAdapter(this, getInteractedDrugs());
-        Log.v(TAG, "Here is nothing");
         recyclerView.setAdapter(adapter);
     }
 
@@ -150,28 +116,19 @@ public class DrugInteractionsActivity extends AppCompatActivity {
                 .execute();
     }
 
-    @RequiresApi(api = Build.VERSION_CODES.N)
     private void startSearch(String text) {
-//        adapter = new SearchDrugInteractionsAdapter(this, new BackgroundLoadDrugInteractions(recyclerView, progressBar, this, text, numberOfInteractions).getDrugInteractionsNS());
         List<DrugInteraction> drugs = getInteractedDrugs();
         String updatedText = text.substring(0, 1).toUpperCase() + text.substring(1).toLowerCase();
         if (drugs == null) Log.v(TAG, "LIST IS NULL");
         else {
-//            List<DrugInteraction> drugsForSearch = new ArrayList<DrugInteraction>();
-//            for (DrugInteraction drug : drugs) {
-//                if (drug.getName().contains(updatedText)) drugsForSearch.add(drug);
-//            }
-//
-//            adapter = new SearchDrugInteractionsAdapter(this, drugsForSearch);
-//
-//
+
             List<DrugInteraction> drugsForSearch = drugs.stream()
                                                            .filter(drug -> drug.getName()
                                                                           .contains(updatedText))
                                                            .collect(Collectors.toList());
-            adapter = new SearchDrugInteractionsAdapter(this, drugsForSearch);
-
             whereToGo++;
+
+            adapter = new SearchDrugInteractionsAdapter(this, drugsForSearch);
             recyclerView.setAdapter(adapter);
         }
     }
@@ -195,14 +152,11 @@ public class DrugInteractionsActivity extends AppCompatActivity {
 
     private List<DrugInteraction> getInteractedDrugs() {
         SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
-        Gson gson = new Gson();
+
         String response = sharedPreferences.getString("interacted_drugs", null);
 
-        ArrayList<DrugInteraction> drugs = gson.fromJson(response,
-                new TypeToken<List<DrugInteraction>>() {
-                }.getType());
-
-        return drugs;
+        return new Gson().fromJson(response,
+                new TypeToken<List<DrugInteraction>>() {}.getType());
     }
 
     @Override
@@ -217,16 +171,5 @@ public class DrugInteractionsActivity extends AppCompatActivity {
 
         return super.onKeyDown(keyCode, event);
     }
-
-//    @Override
-//    public void onBackPressed() {
-//        Log.v(TAG, "BACK PRESSED");
-//        if (materialSearchBar.isSearchEnabled()) {
-//            adapter = new SearchDrugInteractionsAdapter(this, getInteractedDrugs());
-//            materialSearchBar.disableSearch();
-//        } else {
-//            super.onBackPressed();
-//        }
-//    }
 
 }
