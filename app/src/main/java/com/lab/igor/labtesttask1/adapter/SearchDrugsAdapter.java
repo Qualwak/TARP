@@ -42,9 +42,9 @@ public class SearchDrugsAdapter extends RecyclerView.Adapter<SearchViewDrugsHold
 
     private Context context;
     private List<String> drugs;
-    private ArrayList<String> list;
+    private List<String> list;
 
-    public SearchDrugsAdapter(Context context, List<String> drugs, ArrayList<String> list) {
+    public SearchDrugsAdapter(Context context, List<String> drugs, List<String> list) {
         this.context = context;
         this.drugs = drugs;
         this.list = list;

@@ -13,7 +13,6 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.lab.igor.labtesttask1.adapter.SearchFoodInteractionsAdapter;
-import com.lab.igor.labtesttask1.db.DatabaseHelper;
 import com.lab.igor.labtesttask1.db.DatabaseHelperNew;
 import com.lab.igor.labtesttask1.model.FoodInteraction;
 

@@ -3,6 +3,8 @@ package com.lab.igor.labtesttask1.activity;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.os.Build;
+import android.support.annotation.RequiresApi;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -10,7 +12,10 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
 
+import com.lab.igor.labtesttask1.AppPreLoadNew;
 import com.lab.igor.labtesttask1.R;
+
+@RequiresApi(api = Build.VERSION_CODES.N)
 
 public class StartActivity extends AppCompatActivity implements View.OnClickListener {
 
@@ -22,6 +27,9 @@ public class StartActivity extends AppCompatActivity implements View.OnClickList
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_start);
+
+        AppPreLoadNew.cResources = getResources();
+        AppPreLoadNew.reinit();
 
         SharedPreferences sharedPreferences = getSharedPreferences("prefs", MODE_PRIVATE);
         boolean firstStart = sharedPreferences.getBoolean("firstStart", true);
@@ -35,6 +43,8 @@ public class StartActivity extends AppCompatActivity implements View.OnClickList
 
         buttonSettings = findViewById(R.id.settings);
         buttonSettings.setOnClickListener(this);
+
+
     }
 
     public void showStartDialog() {

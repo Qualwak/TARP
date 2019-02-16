@@ -47,6 +47,7 @@ import android.widget.Toast;
 
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.GoogleApiAvailability;
+import com.lab.igor.labtesttask1.AppPreLoadNew;
 import com.lab.igor.labtesttask1.ocr.OcrDetectorProcessor;
 import com.lab.igor.labtesttask1.ocr.OcrGraphic;
 import com.lab.igor.labtesttask1.R;
@@ -63,7 +64,9 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 
@@ -72,8 +75,9 @@ import java.util.Map;
  * rear facing camera. During detection overlay graphics are drawn to indicate the position,
  * size, and contents of each TextBlock.
  */
+@RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
 public final class OcrCaptureActivity extends AppCompatActivity {
-    private static final String TAG = "OcrCaptureActivity";
+    private static final String TAG = "OcrCActivity";
 
     // Intent request code to handle updating play services if needed.
     private static final int RC_HANDLE_GMS = 9001;
@@ -113,6 +117,7 @@ public final class OcrCaptureActivity extends AppCompatActivity {
     /**
      * Initializes the UI and creates the detector pipeline.
      */
+    @RequiresApi(api = Build.VERSION_CODES.N)
     @Override
     public void onCreate(Bundle bundle) {
         super.onCreate(bundle);
@@ -152,24 +157,29 @@ public final class OcrCaptureActivity extends AppCompatActivity {
         usersDrugs = intent.getStringArrayListExtra("users_drugs");
 
         if (getIntent().getStringExtra("info").contains("Food")) {
-            try {
-                map = returningFoodInterMap();
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
+//            try {
+                map = AppPreLoadNew.getFooFoodInters();
+//                map = returningFoodInterMap();
+//            } catch (IOException e) {
+//                e.printStackTrace();
+//            }
         } else {
-            try {
-                map = returningDrugsInterMap();
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
+//            try {
+                map = AppPreLoadNew.getFooDrugInters();
+//            } catch (IOException e) {
+//                e.printStackTrace();
+//            }
         }
 
-        try {
-            drugs = returning();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+//        try {
+//        List<String> help = foo();
+            List<String> help = AppPreLoadNew.getFooDrugs();
+            drugs = help.toArray(new String[help.size()]);
+//            drugs = (String[]) foo().toArray();
+//            drugs = returning();
+//        } catch (IOException e) {
+//            e.printStackTrace();
+//        }
 
         recyclerView = (RecyclerView) findViewById(R.id.recycler_camera_view);
 
@@ -438,7 +448,6 @@ public final class OcrCaptureActivity extends AppCompatActivity {
      * @param rawY - the raw position of the tap.
      * @return true if the tap was on a TextBlock
      */
-    @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
     private boolean onTap(float rawX, float rawY) {
         OcrGraphic graphic = graphicOverlay.getGraphicAtLocation(rawX, rawY);
         TextBlock text = null;
@@ -523,62 +532,4 @@ public final class OcrCaptureActivity extends AppCompatActivity {
 
     }
 
-    public String[] returning() throws IOException {
-        InputStream inputStream = getResources().openRawResource(R.raw.test_8_output);
-        InputStreamReader inputStreamReader = new InputStreamReader(inputStream);
-        BufferedReader bufferedReader = new BufferedReader(inputStreamReader);
-        String line = bufferedReader.readLine().toLowerCase();
-        String[] strings = new String[23027];
-        int i = 0;
-        while (line != null) {
-            strings[i] = line;
-            line = bufferedReader.readLine();
-            if (line != null)
-                line = line.toLowerCase();
-            i++;
-        }
-        bufferedReader.close();
-        return strings;
-    }
-
-    public Map<String, String> returningDrugsInterMap() throws IOException {
-        InputStream inputStream = getResources().openRawResource(R.raw.test_2);
-        InputStreamReader inputStreamReader = new InputStreamReader(inputStream);
-        BufferedReader bufferedReader = new BufferedReader(inputStreamReader);
-        boolean flag = false;
-        Map<String, String> mapDrugs = new HashMap<String, String>();
-        String line = bufferedReader.readLine();
-        while (line != null) {
-            String[] array = line.split("q,q");
-//            if (array[0].equals("paracetamol"))// && array[1].equals("St. John's Wort"))
-//                System.out.println("YES");
-            mapDrugs.put(array[0], " interacts with " + array[1] + ". We have found " + array[2] + " drugs which interacts with ");
-            line = bufferedReader.readLine();
-
-        }
-        bufferedReader.close();
-        return mapDrugs;
-    }
-
-    public Map<String, String> returningFoodInterMap() throws IOException {
-        InputStream inputStream = getResources().openRawResource(R.raw.final_1_b);
-        InputStreamReader inputStreamReader = new InputStreamReader(inputStream);
-        BufferedReader bufferedReader = new BufferedReader(inputStreamReader);
-        boolean flag = false;
-        Map<String, String> mapDrugs = new HashMap<String, String>();
-        String line = bufferedReader.readLine();
-        while (line != null) {
-            String[] array = line.split("q,q");
-            if (array[0].equals("paracetamol"))// && array[1].equals("St. John's Wort"))
-                System.out.println("YES");
-            if (array[2].equals("1")) {
-                mapDrugs.put(array[0], " has food interaction: " + array[1] + " We have found " + array[2] + " food interaction with ");
-            } else
-                mapDrugs.put(array[0], " has food interaction: " + array[1] + " We have found " + array[2] + " food interactions with ");
-            line = bufferedReader.readLine();
-
-        }
-        bufferedReader.close();
-        return mapDrugs;
-    }
 }

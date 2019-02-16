@@ -1,6 +1,5 @@
 package com.lab.igor.labtesttask1.activity;
 
-import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.RequiresApi;
@@ -12,59 +11,57 @@ import android.text.TextWatcher;
 import android.util.Log;
 import android.widget.TextView;
 
+import com.lab.igor.labtesttask1.AppPreLoadNew;
 import com.lab.igor.labtesttask1.R;
 import com.lab.igor.labtesttask1.adapter.SearchDrugsAdapter;
-import com.lab.igor.labtesttask1.db.DatabaseHelper;
 import com.mancj.materialsearchbar.MaterialSearchBar;
 
-import java.io.BufferedReader;
 import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
+import java.util.Objects;
 import java.util.stream.Collectors;
 
+@RequiresApi(api = Build.VERSION_CODES.N)
 public class DrugsActivity extends AppCompatActivity {
 
-    private static final String TAG = "DrugsActivity";
+    private static final String TAG = "DsActivity";
+
     RecyclerView recyclerView;
     RecyclerView.LayoutManager layoutManager;
     SearchDrugsAdapter adapter;
+
     TextView textView;
 
     MaterialSearchBar materialSearchBar;
-    List<String> suggestList = new ArrayList<String>();
-    ArrayList<String> listOfUsersDrugs;
-    ArrayList<String> listSuggestedTest;
 
-    DatabaseHelper databaseHelper;
+    List<String> suggestList;
+    List<String> listOfUsersDrugs;
+    List<String> listSuggestedTest;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_drugs);
 
-        recyclerView = (RecyclerView) findViewById(R.id.recycler_search);
-        materialSearchBar = (MaterialSearchBar) findViewById(R.id.search_bar);
-        textView = (TextView) findViewById(R.id.text_found);
+        if (Objects.isNull(AppPreLoadNew.cResources)) {
+            AppPreLoadNew.cResources = getResources();
+            AppPreLoadNew.reinit();
+        }
+
+        recyclerView = findViewById(R.id.recycler_search);
+        materialSearchBar = findViewById(R.id.search_bar);
+        textView = findViewById(R.id.text_found);
         layoutManager = new LinearLayoutManager(this);
         recyclerView.setLayoutManager(layoutManager);
         recyclerView.setHasFixedSize(true);
 
-        Intent intent = getIntent();
-        ArrayList<String> list = intent.getStringArrayListExtra("text_view");
-        listOfUsersDrugs = list;
-        try {
-            listSuggestedTest = returning2();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+
+        listOfUsersDrugs = getIntent().getStringArrayListExtra("text_view");
+        listSuggestedTest = foo();
+
 
         Log.v(TAG, textView.getText().toString());
-
-        databaseHelper = new DatabaseHelper(this);
 
         materialSearchBar.setHint("Search");
 
@@ -88,13 +85,13 @@ public class DrugsActivity extends AppCompatActivity {
             public void afterTextChanged(Editable editable) {}
         });
         materialSearchBar.setOnSearchActionListener(new MaterialSearchBar.OnSearchActionListener() {
+
             @Override
             public void onSearchStateChanged(boolean enabled) {
                 if (!enabled)
                     recyclerView.setAdapter(adapter);
             }
 
-            @RequiresApi(api = Build.VERSION_CODES.N)
             @Override
             public void onSearchConfirmed(CharSequence text) {
                 try {
@@ -108,68 +105,41 @@ public class DrugsActivity extends AppCompatActivity {
             public void onButtonClicked(int buttonCode) {}
         });
 
-        adapter = new SearchDrugsAdapter(this, listSuggestedTest, list);
-
+        adapter = new SearchDrugsAdapter(this, listSuggestedTest, listOfUsersDrugs);
         recyclerView.setAdapter(adapter);
     }
 
-    @RequiresApi(api = Build.VERSION_CODES.N)
     private void startSearch(String text) throws IOException {
-//        String[] localDrugs = returning();
-//        ArrayList<String> oneElem = new ArrayList<String>();
-//        for (int i = 0; i < localDrugs.length; i++)
-//            if (localDrugs[i].contains(text.substring(1)))
-//                oneElem.add(localDrugs[i]);
+        List<String> oneElemNew = foo().stream()
+                                       .filter(string -> string.contains(text.substring(1)))
+                                       .collect(Collectors.toList());
 
-        List<String> oneElem = Arrays.stream(returning())
-                                        .filter(string -> string.contains(text.substring(1)))
-                                        .collect(Collectors.toList());
-
-        adapter = new SearchDrugsAdapter(this, oneElem, listOfUsersDrugs);
+        adapter = new SearchDrugsAdapter(this, oneElemNew, listOfUsersDrugs);
         recyclerView.setAdapter(adapter);
     }
 
     private void loadSuggestList() {
-        suggestList = databaseHelper.getNames();
         suggestList = listSuggestedTest;
         materialSearchBar.setLastSuggestions(suggestList);
     }
 
-    public String[] returning() throws IOException {
-        InputStream inputStream = getResources().openRawResource(R.raw.test_8_output);
-        InputStreamReader inputStreamReader = new InputStreamReader(inputStream);
-        BufferedReader bufferedReader = new BufferedReader(inputStreamReader);
-        String line = bufferedReader.readLine().toLowerCase();
-        String[] strings = new String[23027];
-        int i = 0;
-        while (line != null) {
-            strings[i] = line;
-            line = bufferedReader.readLine();
-            if (line != null)
-                line = line.toLowerCase();
-            i++;
-        }
-        bufferedReader.close();
-        return strings;
+    public List<String> foo() {
+//       List<String> drugNamesWithSynonyms = new ArrayList<String>();
+//
+//        InputStream inputStream = getResources().openRawResource(R.raw.test_8_output);
+//        try (BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(inputStream))) {
+//            String line;
+//            while((line = bufferedReader.readLine()) != null) {
+//                drugNamesWithSynonyms.add(line.toLowerCase());
+//            }
+//        } catch (IOException e) {
+//            e.printStackTrace();
+//        }
+//
+//        return drugNamesWithSynonyms;
+
+        return AppPreLoadNew.getFooDrugs();
+//        return AppPreLoadNew.fooDrugs;
     }
 
-    public ArrayList<String> returning2() throws IOException {
-        InputStream inputStream = getResources().openRawResource(R.raw.test_8_output);
-        InputStreamReader inputStreamReader = new InputStreamReader(inputStream);
-        BufferedReader bufferedReader = new BufferedReader(inputStreamReader);
-        String line = bufferedReader.readLine().toLowerCase();
-        String[] strings = new String[23027];
-        ArrayList<String> stringsList = new ArrayList<>();
-        int i = 0;
-        while (line != null) {
-            strings[i] = line;
-            stringsList.add(line);
-            line = bufferedReader.readLine();
-            if (line != null)
-                line = line.toLowerCase();
-            i++;
-        }
-        bufferedReader.close();
-        return stringsList;
-    }
 }

@@ -17,7 +17,6 @@ import android.widget.TextView;
 
 import com.google.gson.Gson;
 import com.lab.igor.labtesttask1.adapter.SearchDrugInteractionsAdapter;
-import com.lab.igor.labtesttask1.db.DatabaseHelper;
 import com.lab.igor.labtesttask1.db.DatabaseHelperNew;
 import com.lab.igor.labtesttask1.model.DrugInteraction;
 import com.mancj.materialsearchbar.MaterialSearchBar;

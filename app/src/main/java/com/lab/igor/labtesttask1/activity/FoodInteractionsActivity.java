@@ -6,6 +6,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
@@ -15,7 +16,7 @@ import com.lab.igor.labtesttask1.R;
 @RequiresApi(api = Build.VERSION_CODES.N)
 public class FoodInteractionsActivity extends AppCompatActivity {
 
-    private static final String TAG = "FoodInteractionsActivity";
+    private static final String TAG = "FIActivity";
 
     ProgressBar progressBar;
 
@@ -45,6 +46,7 @@ public class FoodInteractionsActivity extends AppCompatActivity {
         String formattedLabel = label.substring(0, 1).toUpperCase() + label.substring(1).toLowerCase();
         textView.setText(formattedLabel);
 
+        Log.d(TAG, String.format("recognized text was formatted to %s", formattedLabel));
     }
 
     @Override

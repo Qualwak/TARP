@@ -54,30 +54,4 @@ public class DatabaseHelper extends SQLiteAssetHelper {
         return result;
     }
 
-
-    //function that gets all drugs's name
-    public List<String> getNames() {
-        // creating SQLiteDatabase object
-        SQLiteDatabase db = getReadableDatabase();
-        SQLiteQueryBuilder qb = new SQLiteQueryBuilder();
-
-        // column names in table
-        String[] sqlSelect = {"name"};
-        String tableName = "drugs"; // name of the table in your database;
-
-        qb.setTables(tableName);
-
-        Cursor cursor = qb.query(db, sqlSelect, null, null, null, null, null);
-
-        List<String> result = new ArrayList<String>();
-
-        if (cursor.moveToFirst()) {
-
-            do {
-                result.add(cursor.getString(cursor.getColumnIndex("name")));
-            } while (cursor.moveToNext());
-        }
-        return result;
-    }
-
 }

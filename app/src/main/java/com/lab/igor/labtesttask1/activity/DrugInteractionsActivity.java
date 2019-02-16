@@ -32,7 +32,7 @@ import java.util.stream.Collectors;
 @RequiresApi(api = Build.VERSION_CODES.N)
 public class DrugInteractionsActivity extends AppCompatActivity {
 
-    private static final String TAG = "DrugInteractions";
+    private static final String TAG = "DIActivity";
     RecyclerView recyclerView;
     RecyclerView.LayoutManager layoutManager;
     SearchDrugInteractionsAdapter adapter;
@@ -65,7 +65,7 @@ public class DrugInteractionsActivity extends AppCompatActivity {
         String formattedLabel = label.substring(0, 1).toUpperCase() + label.substring(1).toLowerCase();
         textView.setText(formattedLabel);
 
-        Log.v(TAG, textView.getText().toString());
+        Log.d(TAG, String.format("recognized text was formatted to %s", formattedLabel));
 
         materialSearchBar.setHint("Search");
 
