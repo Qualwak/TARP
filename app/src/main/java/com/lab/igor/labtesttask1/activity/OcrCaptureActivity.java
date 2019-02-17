@@ -52,7 +52,6 @@ import com.lab.igor.labtesttask1.ocr.OcrDetectorProcessor;
 import com.lab.igor.labtesttask1.ocr.OcrGraphic;
 import com.lab.igor.labtesttask1.R;
 import com.lab.igor.labtesttask1.adapter.DetectedDrugsAdapter;
-import com.lab.igor.labtesttask1.db.DatabaseHelper;
 import com.lab.igor.labtesttask1.camera.CameraSource;
 import com.lab.igor.labtesttask1.camera.CameraSourcePreview;
 import com.lab.igor.labtesttask1.camera.GraphicOverlay;
@@ -111,8 +110,8 @@ public final class OcrCaptureActivity extends AppCompatActivity {
     // A TextToSpeech engine for speaking a String value.
     private TextToSpeech tts;
 
-    // DB
-    public DatabaseHelper databaseHelper;
+//    // DB
+//    public DatabaseHelper databaseHelper;
 
     /**
      * Initializes the UI and creates the detector pipeline.
@@ -157,29 +156,14 @@ public final class OcrCaptureActivity extends AppCompatActivity {
         usersDrugs = intent.getStringArrayListExtra("users_drugs");
 
         if (getIntent().getStringExtra("info").contains("Food")) {
-//            try {
-                map = AppPreLoadNew.getFooFoodInters();
-//                map = returningFoodInterMap();
-//            } catch (IOException e) {
-//                e.printStackTrace();
-//            }
+            map = AppPreLoadNew.getFooFoodInters();
         } else {
-//            try {
-                map = AppPreLoadNew.getFooDrugInters();
-//            } catch (IOException e) {
-//                e.printStackTrace();
-//            }
+            map = AppPreLoadNew.getFooDrugInters();
         }
 
-//        try {
-//        List<String> help = foo();
-            List<String> help = AppPreLoadNew.getFooDrugs();
-            drugs = help.toArray(new String[help.size()]);
-//            drugs = (String[]) foo().toArray();
-//            drugs = returning();
-//        } catch (IOException e) {
-//            e.printStackTrace();
-//        }
+        List<String> help = AppPreLoadNew.getFooDrugs();
+        drugs = help.toArray(new String[help.size()]);
+
 
         recyclerView = (RecyclerView) findViewById(R.id.recycler_camera_view);
 
@@ -276,7 +260,7 @@ public final class OcrCaptureActivity extends AppCompatActivity {
     @SuppressLint("InlinedApi")
     private void createCameraSource(boolean autoFocus, boolean useFlash) throws IOException {
         Context context = getApplicationContext();
-        databaseHelper = new DatabaseHelper(this);
+//        databaseHelper = new DatabaseHelper(this);
         // A text recognizer is created to find text.  An associated multi-processor instance
         // is set to receive the text recognition results, track the text, and maintain
         // graphics for each text block on screen.  The factory is used by the multi-processor to

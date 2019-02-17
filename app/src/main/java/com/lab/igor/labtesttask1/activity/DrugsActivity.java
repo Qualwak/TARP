@@ -124,22 +124,7 @@ public class DrugsActivity extends AppCompatActivity {
     }
 
     public List<String> foo() {
-//       List<String> drugNamesWithSynonyms = new ArrayList<String>();
-//
-//        InputStream inputStream = getResources().openRawResource(R.raw.test_8_output);
-//        try (BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(inputStream))) {
-//            String line;
-//            while((line = bufferedReader.readLine()) != null) {
-//                drugNamesWithSynonyms.add(line.toLowerCase());
-//            }
-//        } catch (IOException e) {
-//            e.printStackTrace();
-//        }
-//
-//        return drugNamesWithSynonyms;
-
         return AppPreLoadNew.getFooDrugs();
-//        return AppPreLoadNew.fooDrugs;
     }
 
 }

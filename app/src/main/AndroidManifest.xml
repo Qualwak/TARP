@@ -46,7 +46,9 @@
         <activity
             android:name=".activity.OldSettingsActivity"
             android:screenOrientation="portrait" />
-        <activity android:name=".activity.ProfileActivity"></activity>
+        <activity android:name=".activity.ProfileActivity" />
+        <activity android:name=".activity.WarningActivity" />
+        <activity android:name=".activity.NewSettingsActivity"></activity>
     </application>
 
 </manifest>

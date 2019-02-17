@@ -3,7 +3,6 @@ package com.lab.igor.labtesttask1;
 import android.content.res.Resources;
 import android.os.Build;
 import android.support.annotation.RequiresApi;
-import android.util.Log;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -15,16 +14,12 @@ import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 
-/**
- * Created by Igor on 17-Feb-19.
- */
-
 @RequiresApi(api = Build.VERSION_CODES.N)
 public class AppPreLoadNew {
 
-    public static List<String> fooDrugs;
-    public static Map<String, String> fooFoodInters;
-    public static Map<String, String> fooDrugInters;
+    private static List<String> fooDrugs;
+    private static Map<String, String> fooFoodInters;
+    private static Map<String, String> fooDrugInters;
 
     public static Resources cResources;
 
@@ -124,13 +119,6 @@ public class AppPreLoadNew {
         if (Objects.isNull(fooDrugInters)) {
             fooDrugInters = fooDrugInters();
         }
-//        for (String string : fooDrugs) {
-//            if (string.trim().contains("paracetamol")) {
-//                Log.i("LOGIC", ": FOUND");
-//                return;
-//            }
-//        }
-//        Log.i("LOGIC", ": NOT FOUND");
     }
 
 }

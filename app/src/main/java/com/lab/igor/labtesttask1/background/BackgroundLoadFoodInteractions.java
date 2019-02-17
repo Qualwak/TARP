@@ -1,6 +1,7 @@
 package com.lab.igor.labtesttask1.background;
 
 import android.content.Context;
+import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteQueryBuilder;
@@ -12,6 +13,8 @@ import android.view.View;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
+import com.lab.igor.labtesttask1.activity.FoodInteractionsActivity;
+import com.lab.igor.labtesttask1.activity.WarningActivity;
 import com.lab.igor.labtesttask1.adapter.SearchFoodInteractionsAdapter;
 import com.lab.igor.labtesttask1.db.DatabaseHelperNew;
 import com.lab.igor.labtesttask1.model.FoodInteraction;
@@ -74,10 +77,16 @@ public class BackgroundLoadFoodInteractions extends AsyncTask<Void, FoodInteract
                     publishProgress(new FoodInteraction(interaction));
                 } while (cursor.moveToNext());
             }
+//            else {
+//                Intent intent = new Intent(context.getApplicationContext(), WarningActivity.class);
+//                context.startActivity(intent);
+//            }
         } finally {
             Objects.requireNonNull(cursor, "");
             cursor.close();
             DatabaseHelperNew.getInstance(context).close();
+
+
         }
 
         return null;
