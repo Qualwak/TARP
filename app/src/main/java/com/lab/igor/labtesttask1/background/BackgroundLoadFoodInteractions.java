@@ -77,16 +77,15 @@ public class BackgroundLoadFoodInteractions extends AsyncTask<Void, FoodInteract
                     publishProgress(new FoodInteraction(interaction));
                 } while (cursor.moveToNext());
             }
-//            else {
-//                Intent intent = new Intent(context.getApplicationContext(), WarningActivity.class);
-//                context.startActivity(intent);
-//            }
+            else {
+                Intent intent = new Intent(context.getApplicationContext(), WarningActivity.class);
+                intent.putExtra("fromWhere", "food");
+                context.startActivity(intent);
+            }
         } finally {
             Objects.requireNonNull(cursor, "");
             cursor.close();
             DatabaseHelperNew.getInstance(context).close();
-
-
         }
 
         return null;

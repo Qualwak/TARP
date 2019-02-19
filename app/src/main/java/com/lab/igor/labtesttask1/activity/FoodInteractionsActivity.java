@@ -16,7 +16,7 @@ import com.lab.igor.labtesttask1.R;
 @RequiresApi(api = Build.VERSION_CODES.N)
 public class FoodInteractionsActivity extends AppCompatActivity {
 
-    private static final String TAG = "FIActivity";
+    private static final String TAG = "FIsActivity";
 
     ProgressBar progressBar;
 

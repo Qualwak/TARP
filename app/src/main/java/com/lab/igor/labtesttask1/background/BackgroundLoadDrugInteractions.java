@@ -1,6 +1,7 @@
 package com.lab.igor.labtesttask1.background;
 
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
@@ -16,6 +17,8 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.google.gson.Gson;
+import com.lab.igor.labtesttask1.activity.FoodInteractionsActivity;
+import com.lab.igor.labtesttask1.activity.WarningActivity;
 import com.lab.igor.labtesttask1.adapter.SearchDrugInteractionsAdapter;
 import com.lab.igor.labtesttask1.db.DatabaseHelperNew;
 import com.lab.igor.labtesttask1.model.DrugInteraction;
@@ -94,6 +97,10 @@ public class BackgroundLoadDrugInteractions extends AsyncTask<Void, DrugInteract
                     drugInteractionNames.add(nameOfDrugInteraction);
                     interactedDrugs.add(new DrugInteraction(nameOfDrugInteraction, description));
                 } while (cursor.moveToNext());
+            } else {
+                Intent intent = new Intent(context.getApplicationContext(), WarningActivity.class);
+                intent.putExtra("fromWhere", "drug");
+                context.startActivity(intent);
             }
             passingDrugNames(drugInteractionNames);
             passingInteractedDrugs(interactedDrugs);

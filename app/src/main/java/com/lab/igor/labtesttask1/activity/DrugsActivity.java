@@ -46,7 +46,7 @@ public class DrugsActivity extends AppCompatActivity {
 
         if (Objects.isNull(AppPreLoadNew.cResources)) {
             AppPreLoadNew.cResources = getResources();
-            AppPreLoadNew.reinit();
+            AppPreLoadNew.reinitialize();
         }
 
         recyclerView = findViewById(R.id.recycler_search);

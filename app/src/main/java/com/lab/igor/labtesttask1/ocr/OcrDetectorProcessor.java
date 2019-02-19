@@ -80,7 +80,6 @@ public class OcrDetectorProcessor implements Detector.Processor<TextBlock> {
                     String nextArray = items.valueAt(q).getValue().split(" ")[0].split("\n")[0];
                     if (mapDrugs.get(nextArray.toLowerCase()) != null) {
                         Log.d("OcrDetectorProcessor", nextArray);
-
                         if (usersDrugs != null && usersDrugs.contains(nextArray.substring(0, 1).toUpperCase() + nextArray.substring(1).toLowerCase())) {
                             drugsCamera.add(nextArray + mapDrugs.get(nextArray.toLowerCase()) + nextArray);
                         } else {
@@ -90,13 +89,10 @@ public class OcrDetectorProcessor implements Detector.Processor<TextBlock> {
 
                 }
                 Handler handler = new Handler(ocrCaptureActivity.getMainLooper());
-                handler.post(new Runnable() {
-                    @Override
-                    public void run() {
-                        recyclerView.setLayoutManager(new LinearLayoutManager(ocrCaptureActivity));
-                        adapter = new DetectedDrugsAdapter(ocrCaptureActivity, drugsCamera, usersDrugs, whereToGo);
-                        recyclerView.setAdapter(adapter);
-                    }
+                handler.post(() -> {
+                    recyclerView.setLayoutManager(new LinearLayoutManager(ocrCaptureActivity));
+                    adapter = new DetectedDrugsAdapter(ocrCaptureActivity, drugsCamera, usersDrugs, whereToGo);
+                    recyclerView.setAdapter(adapter);
                 });
                 Log.d("OcrDetectorProcessor", "Text detected! " + item.getValue());
                 final OcrGraphic graphic = new OcrGraphic(graphicOverlay, item);

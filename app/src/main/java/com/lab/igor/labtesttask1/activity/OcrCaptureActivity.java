@@ -76,7 +76,7 @@ import java.util.Map;
  */
 @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
 public final class OcrCaptureActivity extends AppCompatActivity {
-    private static final String TAG = "OcrCActivity";
+    private static final String TAG = "OCRCActivity";
 
     // Intent request code to handle updating play services if needed.
     private static final int RC_HANDLE_GMS = 9001;
@@ -92,14 +92,11 @@ public final class OcrCaptureActivity extends AppCompatActivity {
     private CameraSource cameraSource;
     private CameraSourcePreview preview;
     private GraphicOverlay<OcrGraphic> graphicOverlay;
-    TextView textView;
-    DetectedDrugsAdapter adapter;
     // Helper objects for detecting taps and pinches.
     private ScaleGestureDetector scaleGestureDetector;
     private GestureDetector gestureDetector;
     private Button typeText;
 
-    private String whereToGo;
     Map<String, String> map;
     String[] drugs;
 
@@ -199,22 +196,19 @@ public final class OcrCaptureActivity extends AppCompatActivity {
 
         // Set up the Text To Speech engine.
         TextToSpeech.OnInitListener listener =
-                new TextToSpeech.OnInitListener() {
-                    @Override
-                    public void onInit(final int status) {
-                        if (status == TextToSpeech.SUCCESS) {
-                            Log.d("OnInitListener", "Text to speech engine started successfully.");
-                            tts.setLanguage(Locale.US);
-                        } else {
-                            Log.d("OnInitListener", "Error starting the text to speech engine.");
-                        }
+                status -> {
+                    if (status == TextToSpeech.SUCCESS) {
+                        Log.d("OnInitListener", "Text to speech engine started successfully.");
+                        tts.setLanguage(Locale.US);
+                    } else {
+                        Log.d("OnInitListener", "Error starting the text to speech engine.");
                     }
                 };
         tts = new TextToSpeech(this.getApplicationContext(), listener);
     }
 
     /**
-     * Handles the requesting of the camera permission.  This includes
+     * Handles the requesting of the camera permission. This includes
      * showing a "Snackbar" message of why the permission is needed then
      * sending the request.
      */
@@ -318,6 +312,11 @@ public final class OcrCaptureActivity extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
+//        try {
+//            createCameraSource(true, false);
+//        } catch (IOException e) {
+//            e.printStackTrace();
+//        }
         startCameraSource();
     }
 
@@ -516,4 +515,8 @@ public final class OcrCaptureActivity extends AppCompatActivity {
 
     }
 
+    @Override
+    public void onBackPressed() {
+        startActivity(new Intent(OcrCaptureActivity.this, StartActivity.class));
+    }
 }

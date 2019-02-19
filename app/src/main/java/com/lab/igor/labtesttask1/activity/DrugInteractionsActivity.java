@@ -33,7 +33,7 @@ import java.util.stream.Collectors;
 @RequiresApi(api = Build.VERSION_CODES.N)
 public class DrugInteractionsActivity extends AppCompatActivity {
 
-    private static final String TAG = "DIActivity";
+    private static final String TAG = "DIsActivity";
     RecyclerView recyclerView;
     RecyclerView.LayoutManager layoutManager;
     SearchDrugInteractionsAdapter adapter;
