@@ -13,4 +13,5 @@ public class DrugInteraction {
         this.name = nameOfDrugInteraction;
         this.description = description;
     }
+
 }
