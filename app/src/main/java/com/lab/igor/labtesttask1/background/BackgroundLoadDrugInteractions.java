@@ -17,6 +17,7 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.google.gson.Gson;
+import com.lab.igor.labtesttask1.AppPreLoadNew;
 import com.lab.igor.labtesttask1.activity.FoodInteractionsActivity;
 import com.lab.igor.labtesttask1.activity.WarningActivity;
 import com.lab.igor.labtesttask1.adapter.SearchDrugInteractionsAdapter;
@@ -26,9 +27,11 @@ import com.mancj.materialsearchbar.MaterialSearchBar;
 
 import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Locale;
 import java.util.Objects;
 
+@RequiresApi(api = Build.VERSION_CODES.N)
 public class BackgroundLoadDrugInteractions extends AsyncTask<Void, DrugInteraction, Void> {
 
     private static final String TAG = "myLogs";
@@ -118,7 +121,15 @@ public class BackgroundLoadDrugInteractions extends AsyncTask<Void, DrugInteract
 
     @Override
     protected void onPostExecute(Void aVoid) {
-        materialSearchBar.setLastSuggestions(drugInteractionNames);
+        AppPreLoadNew.setFooInteractedDrugsNames(drugInteractionNames);
+        List<String> notFullList;
+        if (drugInteractionNames.size() > 10) {
+            notFullList = new ArrayList<>(drugInteractionNames.subList(0, 10));
+        } else {
+            notFullList = new ArrayList<>(drugInteractionNames);
+        }
+
+        materialSearchBar.setLastSuggestions(notFullList);
 
         String pattern = numberOfInteractions == 1 ? "" : "s";
         textView.setText(String.format(Locale.ENGLISH, "%d drug interaction%s with %s",
