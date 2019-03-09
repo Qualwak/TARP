@@ -30,19 +30,23 @@ import java.util.Locale;
 import java.util.Objects;
 
 public class BackgroundLoadDrugInteractions extends AsyncTask<Void, DrugInteraction, Void> {
-    private RecyclerView recyclerView;
-    private ProgressBar progressBar;
+
+    private static final String TAG = "myLogs";
+
     private Context context;
     private TextView textView;
-    private int numberOfInteractions = 0;
-    private SearchDrugInteractionsAdapter adapter;
-    private ArrayList<DrugInteraction> drugInteractions = new ArrayList<DrugInteraction>();
-    private String drugName;
-    private static final String TAG = "myLogs";
-    private ArrayList<String> drugInteractionNames = new ArrayList<String>();
-    private ArrayList<DrugInteraction> interactedDrugs = new ArrayList<DrugInteraction>();
+    private ProgressBar progressBar;
+    private RecyclerView recyclerView;
     private MaterialSearchBar materialSearchBar;
 
+    private int numberOfInteractions = 0;
+
+    private String drugName;
+    private SearchDrugInteractionsAdapter adapter;
+
+    private ArrayList<DrugInteraction> drugInteractions = new ArrayList<DrugInteraction>();
+    private ArrayList<String> drugInteractionNames = new ArrayList<String>();
+    private ArrayList<DrugInteraction> interactedDrugs = new ArrayList<DrugInteraction>();
 
     public BackgroundLoadDrugInteractions(RecyclerView recyclerView,
                                           ProgressBar progressBar, Context context, String drugName,
@@ -55,7 +59,6 @@ public class BackgroundLoadDrugInteractions extends AsyncTask<Void, DrugInteract
         this.materialSearchBar = materialSearchBar;
     }
 
-    //in main UI thread
     @Override
     protected void onPreExecute() {
         adapter = new SearchDrugInteractionsAdapter(drugInteractions);
@@ -63,7 +66,6 @@ public class BackgroundLoadDrugInteractions extends AsyncTask<Void, DrugInteract
         progressBar.setVisibility(View.VISIBLE);
     }
 
-    //in separate background thread
     @RequiresApi(api = Build.VERSION_CODES.N)
     @Override
     protected Void doInBackground(Void... voids) {
@@ -77,21 +79,16 @@ public class BackgroundLoadDrugInteractions extends AsyncTask<Void, DrugInteract
 
             cursor = qb.query(db, sqlSelect, "drugs.name LIKE ? OR drugs.synonyms LIKE ?", new String[] {"%"+drugName+"%", "%"+drugName+"%"}, null, null, null);
 
-            String description, nameOfDrugInteraction;
             int i = 0;
+            String description, nameOfDrugInteraction;
             if (cursor.moveToFirst()) {
                 do {
                     numberOfInteractions++;
                     Log.i(TAG, "number for now" + (++i));
-//                    description = cursor.getString(cursor.getColumnIndex("drug2_name"));
-//                    nameOfDrugInteraction = cursor.getString(cursor.getColumnIndex("description"));
-//                    publishProgress(new DrugInteraction(description, nameOfDrugInteraction));
-//                    drugInteractionNames.add(description);
-//                    interactedDrugs.add(new DrugInteraction(description, nameOfDrugInteraction));
 
                     nameOfDrugInteraction = cursor.getString(cursor.getColumnIndex("drug2_name"));
                     description = cursor.getString(cursor.getColumnIndex("description"));
-//
+
                     publishProgress(new DrugInteraction(nameOfDrugInteraction, description));
 
                     drugInteractionNames.add(nameOfDrugInteraction);
@@ -102,9 +99,8 @@ public class BackgroundLoadDrugInteractions extends AsyncTask<Void, DrugInteract
                 intent.putExtra("fromWhere", "drug");
                 context.startActivity(intent);
             }
-            passingDrugNames(drugInteractionNames);
-            passingInteractedDrugs(interactedDrugs);
 
+            passingInteractedDrugs(interactedDrugs);
         } finally {
             Objects.requireNonNull(cursor);
             cursor.close();
@@ -114,14 +110,12 @@ public class BackgroundLoadDrugInteractions extends AsyncTask<Void, DrugInteract
         return null;
     }
 
-    //in main UI thread
     @Override
     protected void onProgressUpdate(DrugInteraction... values) {
         drugInteractions.add(values[0]);
         adapter.notifyDataSetChanged();
     }
 
-    //in main UI thread
     @Override
     protected void onPostExecute(Void aVoid) {
         materialSearchBar.setLastSuggestions(drugInteractionNames);
@@ -131,16 +125,6 @@ public class BackgroundLoadDrugInteractions extends AsyncTask<Void, DrugInteract
                 numberOfInteractions, pattern, drugName));
 
         progressBar.setVisibility(View.GONE);
-
-
-    }
-
-    private void passingDrugNames(ArrayList<String> drugNames) {
-        SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(context);
-        SharedPreferences.Editor editor = preferences.edit();
-
-        editor.putStringSet("names", new HashSet<String>(drugNames));
-        editor.apply();
     }
 
     private void passingInteractedDrugs(ArrayList<DrugInteraction> interactedDrugs) {
@@ -152,6 +136,5 @@ public class BackgroundLoadDrugInteractions extends AsyncTask<Void, DrugInteract
         editor.putString("interacted_drugs", jsonDrugs);
         editor.apply();
     }
-
 
 }
