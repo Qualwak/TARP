@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:padding="10dp"
-    tools:context="com.lab.igor.labtesttask1.ProfileActivity">
+    tools:context="com.lab.igor.labtesttask1.activity.ProfileActivity">
 
     <TextView
         android:id="@+id/users_birth_date"
@@ -110,6 +110,7 @@
         android:textSize="14dp"
         android:text="@string/my_drug_interactions"
         android:id="@+id/user_drug_interactions"
+        android:layout_alignParentBottom="true"
         />
     <Button
         android:layout_width="150dp"
@@ -121,5 +122,6 @@
         android:layout_alignParentRight="true"
         android:text="@string/my_food_interactions"
         android:id="@+id/user_food_interactions"
+        android:layout_alignParentBottom="true"
         />
 </RelativeLayout>

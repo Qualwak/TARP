@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#e55353"
+    tools:context="com.lab.igor.labtesttask1.activity.DevelopingActivity">
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="center_vertical"
+        android:text="In development..."
+        android:textSize="24dp"
+        android:textColor="#ffffff"
+        android:textAlignment="center"
+        />
+
+</android.support.constraint.ConstraintLayout>

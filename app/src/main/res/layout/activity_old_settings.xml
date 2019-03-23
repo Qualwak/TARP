@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.lab.igor.labtesttask1.activity.OldSettingsActivity"
+    android:background="#ffffff"
+    android:weightSum="3"
+    android:orientation="vertical"
+    >
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/customborder"
+        android:layout_weight="1">
+        <Button
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:text="@string/listen_to_instructions"
+            android:layout_gravity="center|center_vertical"
+            android:textColor="#ffffff"
+            android:background="@drawable/button"
+            android:id="@+id/instructions"/>
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/customborder"
+        android:layout_weight="1">
+        <Button
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:text="@string/go_to_settings"
+            android:layout_gravity="center"
+            android:textColor="#ffffff"
+            android:background="@drawable/button"
+            android:id="@+id/setting_speech"/>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/customborder"
+        android:layout_weight="1">
+        <Button
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:text="@string/profile_settings"
+            android:layout_gravity="center"
+            android:textColor="#ffffff"
+            android:background="@drawable/button"
+            android:id="@+id/profile"/>
+    </LinearLayout>
+
+</LinearLayout>

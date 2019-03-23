@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.lab.igor.labtesttask1.activity.NewSettingsActivity"
+    android:weightSum="3"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:background="#e55353">
+        <Button
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:text="TalkBack Support"
+            android:onClick="openTalkBackSupportActivity"
+            android:layout_gravity="center"
+            android:textColor="#ffffff"
+            android:background="@drawable/go_to_main_design"
+            android:id="@+id/setting_speech"/>
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:background="#fff">
+        <Button
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:text="Online mode"
+            android:onClick="openChooseModeActivity"
+            android:layout_gravity="center"
+            android:textColor="#ffffff"
+            android:background="@drawable/go_to_main_design"
+            />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:background="#e55353">
+        <Button
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:onClick="openProfileSettingsActivity"
+            android:text="Profile Settings"
+            android:layout_gravity="center"
+            android:textColor="#ffffff"
+            android:background="@drawable/go_to_main_design"
+
+            />
+    </LinearLayout>
+
+</LinearLayout>
