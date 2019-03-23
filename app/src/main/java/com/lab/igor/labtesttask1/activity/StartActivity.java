@@ -1,6 +1,5 @@
 package com.lab.igor.labtesttask1.activity;
 
-import android.app.Activity;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Build;
@@ -16,12 +15,10 @@ import com.lab.igor.labtesttask1.AppPreLoadNew;
 import com.lab.igor.labtesttask1.R;
 
 @RequiresApi(api = Build.VERSION_CODES.N)
-
 public class StartActivity extends AppCompatActivity implements View.OnClickListener {
 
     private Button buttonDrugInteractionsLookup;
     private Button buttonFoodInteractionLookup;
-    private Button buttonSettings;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -41,7 +38,7 @@ public class StartActivity extends AppCompatActivity implements View.OnClickList
         buttonFoodInteractionLookup = findViewById(R.id.food_interaction_lookup);
         buttonFoodInteractionLookup.setOnClickListener(this);
 
-        buttonSettings = findViewById(R.id.settings);
+        Button buttonSettings = findViewById(R.id.settings);
         buttonSettings.setOnClickListener(this);
 
 
@@ -82,7 +79,7 @@ public class StartActivity extends AppCompatActivity implements View.OnClickList
                 }).start();
                 break;
             case R.id.settings:
-                Intent intent4 = new Intent(StartActivity.this, OldSettingsActivity.class);
+                Intent intent4 = new Intent(StartActivity.this, NewSettingsActivity.class);
                 startActivity(intent4);
                 break;
             default:

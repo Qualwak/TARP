@@ -97,10 +97,6 @@ public class BackgroundLoadDrugInteractions extends AsyncTask<Void, DrugInteract
                     drugInteractionNames.add(nameOfDrugInteraction);
                     interactedDrugs.add(new DrugInteraction(nameOfDrugInteraction, description));
                 } while (cursor.moveToNext());
-            } else {
-                Intent intent = new Intent(context.getApplicationContext(), WarningActivity.class);
-                intent.putExtra("fromWhere", "drug");
-                context.startActivity(intent);
             }
 
             passingInteractedDrugs(interactedDrugs);

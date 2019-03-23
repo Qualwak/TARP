@@ -21,6 +21,8 @@ public class AppPreLoadNew {
     private static Map<String, String> fooFoodInters;
     private static Map<String, String> fooDrugInters;
 
+    private static List<String> interactedDrugsNames;
+
     public static Resources cResources;
 
     public AppPreLoadNew(Resources resources) {
@@ -65,6 +67,14 @@ public class AppPreLoadNew {
         return fooDrugInters;
     }
 
+    public static void setFooInteractedDrugsNames(List<String> names) {
+        interactedDrugsNames = new ArrayList<>(names);
+    }
+
+    public static List<String> getFooInteractedDrugsNames() {
+        return interactedDrugsNames;
+    }
+
     private static List<String> foo() {
         List<String> drugNamesWithSynonyms = new ArrayList<String>();
 
@@ -79,6 +89,10 @@ public class AppPreLoadNew {
         }
 
         return drugNamesWithSynonyms;
+    }
+
+    private static List<String> fooFixed(int pageNumber, int itemCount) {
+        return fooDrugs.subList((pageNumber - 1) * itemCount, (pageNumber - 1) * itemCount + itemCount);
     }
 
     private static Map<String, String> fooFoodInters() {
@@ -120,9 +134,5 @@ public class AppPreLoadNew {
 
         return drugInteractions;
     }
-
-
-
-
 
 }

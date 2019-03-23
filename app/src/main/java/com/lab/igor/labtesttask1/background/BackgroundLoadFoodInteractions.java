@@ -26,15 +26,17 @@ import java.util.Objects;
 @RequiresApi(api = Build.VERSION_CODES.N)
 public class BackgroundLoadFoodInteractions extends AsyncTask<Void, FoodInteraction, Void> {
 
-    private RecyclerView recyclerView;
-    private ProgressBar progressBar;
     private Context context;
     private TextView textView;
-    private int numberOfInteractions = 0;
-    private SearchFoodInteractionsAdapter adapter;
-    private ArrayList<FoodInteraction> foodInteractions = new ArrayList<FoodInteraction>();
-    private String drugName;
+    private ProgressBar progressBar;
+    private RecyclerView recyclerView;
 
+    private String drugName;
+    private SearchFoodInteractionsAdapter adapter;
+
+    private int numberOfInteractions = 0;
+
+    private ArrayList<FoodInteraction> foodInteractions = new ArrayList<FoodInteraction>();
 
     public BackgroundLoadFoodInteractions(RecyclerView recyclerView, ProgressBar progressBar, Context context, String drugName, TextView textView) {
         this.recyclerView = recyclerView;
@@ -44,8 +46,6 @@ public class BackgroundLoadFoodInteractions extends AsyncTask<Void, FoodInteract
         this.textView = textView;
     }
 
-
-    //in main UI thread
     @Override
     protected void onPreExecute() {
         adapter = new SearchFoodInteractionsAdapter(foodInteractions);
@@ -53,7 +53,6 @@ public class BackgroundLoadFoodInteractions extends AsyncTask<Void, FoodInteract
         progressBar.setVisibility(View.VISIBLE);
     }
 
-    //in separate background thread
     @Override
     protected Void doInBackground(Void... voids) {
         SQLiteQueryBuilder qb = new SQLiteQueryBuilder();
@@ -77,11 +76,6 @@ public class BackgroundLoadFoodInteractions extends AsyncTask<Void, FoodInteract
                     publishProgress(new FoodInteraction(interaction));
                 } while (cursor.moveToNext());
             }
-            else {
-                Intent intent = new Intent(context.getApplicationContext(), WarningActivity.class);
-                intent.putExtra("fromWhere", "food");
-                context.startActivity(intent);
-            }
         } finally {
             Objects.requireNonNull(cursor, "");
             cursor.close();
@@ -89,17 +83,14 @@ public class BackgroundLoadFoodInteractions extends AsyncTask<Void, FoodInteract
         }
 
         return null;
-
     }
 
-    //in main UI thread
     @Override
     protected void onProgressUpdate(FoodInteraction... values) {
         foodInteractions.add(values[0]);
         adapter.notifyDataSetChanged();
     }
 
-    //in main UI thread
     @Override
     protected void onPostExecute(Void aVoid) {
         String pattern = numberOfInteractions == 1 ? "" : "s";
@@ -108,6 +99,5 @@ public class BackgroundLoadFoodInteractions extends AsyncTask<Void, FoodInteract
 
         progressBar.setVisibility(View.GONE);
     }
-
 
 }

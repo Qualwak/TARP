@@ -30,6 +30,7 @@ import java.util.Arrays;
 import java.util.Calendar;
 import java.util.Locale;
 import java.util.Objects;
+import java.util.Set;
 
 public class ProfileActivity extends FragmentActivity implements DatePickerDialog.OnDateSetListener {
 
@@ -49,27 +50,27 @@ public class ProfileActivity extends FragmentActivity implements DatePickerDialo
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_profile);
-        textView = (TextView) findViewById(R.id.users_birth_date);
+        textView = findViewById(R.id.users_birth_date);
+
         loadData();
 
-
-        Button button = (Button) findViewById(R.id.button_on_date);
+        Button button = findViewById(R.id.button_on_date);
         button.setOnClickListener(view -> {
             DialogFragment datePicker = new PickerDialogs();
             datePicker.show(getFragmentManager(), "date_picker");
         });
 
-        Button addNewDrug = (Button) findViewById(R.id.add_drug_profile);
+        Button addNewDrug = findViewById(R.id.add_drug_profile);
         addNewDrug.setOnClickListener(view -> {
             Intent intent = new Intent(ProfileActivity.this, DrugsActivity.class);
             intent.putStringArrayListExtra("text_view", drugs);
             startActivity(intent);
         });
 
-        Button saveInfo = (Button) findViewById(R.id.button_save_profile);
+        Button saveInfo = findViewById(R.id.button_save_profile);
         saveInfo.setOnClickListener(view -> saveGenderData());
 
-        Button drugInteractions = (Button) findViewById(R.id.user_drug_interactions);
+        Button drugInteractions = findViewById(R.id.user_drug_interactions);
         drugInteractions.setOnClickListener(view -> {
             Toast.makeText(ProfileActivity.this, "Please wait, it is opening...", Toast.LENGTH_LONG).show();
 
@@ -83,7 +84,7 @@ public class ProfileActivity extends FragmentActivity implements DatePickerDialo
             }).start();
         });
 
-        Button foodInteractions = (Button) findViewById(R.id.user_food_interactions);
+        Button foodInteractions = findViewById(R.id.user_food_interactions);
         foodInteractions.setOnClickListener(view -> {
             Toast.makeText(ProfileActivity.this, "Please wait, it is opening...", Toast.LENGTH_LONG).show();
             new Thread(() -> {
@@ -99,13 +100,13 @@ public class ProfileActivity extends FragmentActivity implements DatePickerDialo
         ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>(this,
                 android.R.layout.simple_dropdown_item_1line, Arrays.asList(MALE, FEMALE));
 
-        materialBetterSpinner = (MaterialBetterSpinner) findViewById(R.id.android_material_design_spinner);
+        materialBetterSpinner = findViewById(R.id.android_material_design_spinner);
 
         loadGenderData();
 
         materialBetterSpinner.setAdapter(arrayAdapter);
 
-        recyclerView = (RecyclerView) findViewById(R.id.recycler_view_profile_drugs);
+        recyclerView = findViewById(R.id.recycler_view_profile_drugs);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
 
         adapter = new ProfileDrugsAdapter(getApplicationContext(), drugs);
@@ -138,11 +139,19 @@ public class ProfileActivity extends FragmentActivity implements DatePickerDialo
 
     @RequiresApi(api = Build.VERSION_CODES.N)
     private void loadData() {
+//        SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
         SharedPreferences sharedPreferences = getSharedPreferences("shared preferences", MODE_PRIVATE);
         String json = sharedPreferences.getString("drug list", null);
+//
         Type type = new TypeToken<ArrayList<String>>() {}.getType();
         drugs = new Gson().fromJson(json, type);
-
+//        Set<String> set = sharedPreferences.getStringSet("druglist", null);
+//        if (set != null) {
+//            Log.v("SOMETHING", set.toString());
+//            drugs = new ArrayList<>(set);
+//        } else {
+//            Log.v("SOMETHING", "SET IS NULL");
+//        }
         if (Objects.isNull(drugs)) {
             drugs = new ArrayList<>();
         }
@@ -174,5 +183,9 @@ public class ProfileActivity extends FragmentActivity implements DatePickerDialo
         saveData();
     }
 
+    @Override
+    public void onBackPressed() {
+        startActivity(new Intent(ProfileActivity.this, NewSettingsActivity.class));
+    }
 
 }

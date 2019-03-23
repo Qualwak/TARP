@@ -1,5 +1,6 @@
 package com.lab.igor.labtesttask1.activity;
 
+import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.RequiresApi;
@@ -74,7 +75,7 @@ public class DrugsActivity extends AppCompatActivity {
             public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
                 List<String> suggest = new ArrayList<String>();
                 for (String search : suggestList) {
-                    if (search.toLowerCase().contains(materialSearchBar.getText().toLowerCase())) {
+                    if (search.toLowerCase().startsWith(materialSearchBar.getText().toLowerCase())) {
                         suggest.add(search);
                     }
                 }
@@ -107,6 +108,7 @@ public class DrugsActivity extends AppCompatActivity {
 
         adapter = new SearchDrugsAdapter(this, listSuggestedTest, listOfUsersDrugs);
         recyclerView.setAdapter(adapter);
+
     }
 
     private void startSearch(String text) throws IOException {
@@ -120,11 +122,16 @@ public class DrugsActivity extends AppCompatActivity {
 
     private void loadSuggestList() {
         suggestList = listSuggestedTest;
-        materialSearchBar.setLastSuggestions(suggestList);
+        materialSearchBar.setLastSuggestions(suggestList.subList(0, 15));
     }
 
     public List<String> foo() {
         return AppPreLoadNew.getFooDrugs();
+    }
+
+    @Override
+    public void onBackPressed() {
+        startActivity(new Intent(DrugsActivity.this, ProfileActivity.class));
     }
 
 }

@@ -16,6 +16,7 @@ import com.lab.igor.labtesttask1.R;
 
 import java.util.Locale;
 
+@Deprecated
 public class OldSettingsActivity extends AppCompatActivity implements View.OnClickListener {
 
     private static final String TAG = "SPEECH";

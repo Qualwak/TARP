@@ -5,7 +5,6 @@
     <uses-permission android:name="android.permission.CAMERA" />
 
     <application
-        android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
@@ -27,13 +26,8 @@
 
         <activity
             android:name=".activity.OcrCaptureActivity"
-            android:label="Read Text">
-
-            <!-- <intent-filter> -->
-            <!-- <action android:name="android.intent.action.MAIN" /> -->
-            <!-- <category android:name="android.intent.category.LAUNCHER" /> -->
-            <!-- </intent-filter> -->
-        </activity>
+            android:label="Read Text"
+            android:screenOrientation="portrait" />
         <activity
             android:name=".activity.DrugsActivity"
             android:screenOrientation="portrait" />
@@ -46,9 +40,18 @@
         <activity
             android:name=".activity.OldSettingsActivity"
             android:screenOrientation="portrait" />
-        <activity android:name=".activity.ProfileActivity" />
-        <activity android:name=".activity.WarningActivity" />
-        <activity android:name=".activity.NewSettingsActivity"></activity>
+        <activity
+            android:name=".activity.ProfileActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activity.WarningActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activity.NewSettingsActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activity.DevelopingActivity"
+            android:screenOrientation="portrait" />
     </application>
 
 </manifest>

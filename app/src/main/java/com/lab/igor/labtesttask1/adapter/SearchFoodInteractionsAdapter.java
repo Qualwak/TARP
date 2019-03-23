@@ -1,6 +1,7 @@
 package com.lab.igor.labtesttask1.adapter;
 
 import android.content.Context;
+import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -17,33 +18,26 @@ class SearchViewFoodInteractionsHolder extends RecyclerView.ViewHolder {
 
     public TextView interaction;
 
-    public SearchViewFoodInteractionsHolder(View itemView) {
+    SearchViewFoodInteractionsHolder(View itemView) {
         super(itemView);
         // connect our fields in design with Model's fields
         interaction = (TextView) itemView.findViewById(R.id.interaction);
     }
 
-
 }
 
 public class SearchFoodInteractionsAdapter extends RecyclerView.Adapter<SearchViewFoodInteractionsHolder> {
 
-    private Context context;
     private List<FoodInteraction> foodInteractions = new ArrayList<>();
 
     public SearchFoodInteractionsAdapter(ArrayList<FoodInteraction> foodInteractions) {
         this.foodInteractions = foodInteractions;
     }
 
-    public SearchFoodInteractionsAdapter(Context context, List<FoodInteraction> foodInteractions) {
-        this.context = context;
-        this.foodInteractions = foodInteractions;
-    }
-
-
     // list Of searched items
+    @NonNull
     @Override
-    public SearchViewFoodInteractionsHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+    public SearchViewFoodInteractionsHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         LayoutInflater inflater = LayoutInflater.from(parent.getContext());
         View itemView = inflater.inflate(R.layout.layout_item3, parent, false);
 
@@ -51,7 +45,7 @@ public class SearchFoodInteractionsAdapter extends RecyclerView.Adapter<SearchVi
     }
 
     @Override
-    public void onBindViewHolder(SearchViewFoodInteractionsHolder holder, int position) {
+    public void onBindViewHolder(@NonNull SearchViewFoodInteractionsHolder holder, int position) {
         holder.interaction.setText(foodInteractions.get(position).getInteraction());
 
     }

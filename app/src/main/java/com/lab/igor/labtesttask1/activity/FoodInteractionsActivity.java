@@ -18,14 +18,13 @@ public class FoodInteractionsActivity extends AppCompatActivity {
 
     private static final String TAG = "FIsActivity";
 
-    ProgressBar progressBar;
-
-    RecyclerView.LayoutManager layoutManager;
-    RecyclerView recyclerView;
-
-
     TextView textView;
     TextView textViewNumberOfInteractions;
+
+    RecyclerView recyclerView;
+    RecyclerView.LayoutManager layoutManager;
+
+    ProgressBar progressBar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -58,5 +57,3 @@ public class FoodInteractionsActivity extends AppCompatActivity {
     }
 
 }
-
-

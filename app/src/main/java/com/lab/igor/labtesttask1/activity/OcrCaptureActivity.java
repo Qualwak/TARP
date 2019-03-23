@@ -42,7 +42,6 @@ import android.view.ScaleGestureDetector;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.gms.common.ConnectionResult;
@@ -51,26 +50,20 @@ import com.lab.igor.labtesttask1.AppPreLoadNew;
 import com.lab.igor.labtesttask1.ocr.OcrDetectorProcessor;
 import com.lab.igor.labtesttask1.ocr.OcrGraphic;
 import com.lab.igor.labtesttask1.R;
-import com.lab.igor.labtesttask1.adapter.DetectedDrugsAdapter;
 import com.lab.igor.labtesttask1.camera.CameraSource;
 import com.lab.igor.labtesttask1.camera.CameraSourcePreview;
 import com.lab.igor.labtesttask1.camera.GraphicOverlay;
 import com.google.android.gms.vision.text.TextBlock;
 import com.google.android.gms.vision.text.TextRecognizer;
 
-import java.io.BufferedReader;
 import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
 import java.util.ArrayList;
-import java.util.Collections;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 
 /**
- * Activity for the Ocr Detecting app.  This app detects text and displays the value with the
+ * Activity for the Ocr Detecting app. This app detects text and displays the value with the
  * rear facing camera. During detection overlay graphics are drawn to indicate the position,
  * size, and contents of each TextBlock.
  */
@@ -95,11 +88,9 @@ public final class OcrCaptureActivity extends AppCompatActivity {
     // Helper objects for detecting taps and pinches.
     private ScaleGestureDetector scaleGestureDetector;
     private GestureDetector gestureDetector;
-    private Button typeText;
 
     Map<String, String> map;
     String[] drugs;
-
 
     private ArrayList<String> usersDrugs = new ArrayList<>();
 
@@ -107,8 +98,6 @@ public final class OcrCaptureActivity extends AppCompatActivity {
     // A TextToSpeech engine for speaking a String value.
     private TextToSpeech tts;
 
-//    // DB
-//    public DatabaseHelper databaseHelper;
 
     /**
      * Initializes the UI and creates the detector pipeline.
@@ -119,7 +108,7 @@ public final class OcrCaptureActivity extends AppCompatActivity {
         super.onCreate(bundle);
         setContentView(R.layout.ocr_capture);
 
-        typeText = (Button) findViewById(R.id.typeDrugName);
+        Button typeText = (Button) findViewById(R.id.typeDrugName);
 
         typeText.setOnClickListener(viewOne -> {
             AlertDialog.Builder mBuilder = new AlertDialog.Builder(OcrCaptureActivity.this);
@@ -131,13 +120,25 @@ public final class OcrCaptureActivity extends AppCompatActivity {
                     Toast.makeText(OcrCaptureActivity.this, "Please wait, it is opening...", Toast.LENGTH_LONG).show();
                     new Thread(() -> {
                         if (getIntent().getStringExtra("info").contains("Food")) {
-                            Intent intent = new Intent(OcrCaptureActivity.this, FoodInteractionsActivity.class);
-                            intent.putExtra("text_view", mDrugName.getText().toString().trim());
-                            startActivity(intent);
+                            if (AppPreLoadNew.getFooFoodInters().containsKey(mDrugName.getText().toString().trim().toLowerCase())) {
+                                Intent intent = new Intent(OcrCaptureActivity.this, FoodInteractionsActivity.class);
+                                intent.putExtra("text_view", mDrugName.getText().toString().trim());
+                                startActivity(intent);
+                            } else {
+                                Intent intent = new Intent(OcrCaptureActivity.this, WarningActivity.class);
+                                intent.putExtra("fromWhere", "food");
+                                startActivity(intent);
+                            }
                         } else {
-                            Intent intent = new Intent(OcrCaptureActivity.this, DrugInteractionsActivity.class);
-                            intent.putExtra("text_view", mDrugName.getText().toString().trim());
-                            startActivity(intent);
+                            if (AppPreLoadNew.getFooDrugInters().containsKey(mDrugName.getText().toString().trim().toLowerCase())) {
+                                Intent intent = new Intent(OcrCaptureActivity.this, DrugInteractionsActivity.class);
+                                intent.putExtra("text_view", mDrugName.getText().toString().trim());
+                                startActivity(intent);
+                            } else {
+                                Intent intent = new Intent(OcrCaptureActivity.this, WarningActivity.class);
+                                intent.putExtra("fromWhere", "drug");
+                                startActivity(intent);
+                            }
                         }
                     }).start();
 
@@ -149,9 +150,9 @@ public final class OcrCaptureActivity extends AppCompatActivity {
             AlertDialog dialog = mBuilder.create();
             dialog.show();
         });
-        Intent intent = getIntent();
-        usersDrugs = intent.getStringArrayListExtra("users_drugs");
-
+//        Intent intent = getIntent();
+//        usersDrugs = intent.getStringArrayListExtra("users_drugs");
+        usersDrugs = getIntent().getStringArrayListExtra("users_drugs");
         if (getIntent().getStringExtra("info").contains("Food")) {
             map = AppPreLoadNew.getFooFoodInters();
         } else {
@@ -163,8 +164,6 @@ public final class OcrCaptureActivity extends AppCompatActivity {
 
 
         recyclerView = (RecyclerView) findViewById(R.id.recycler_camera_view);
-
-
         preview = (CameraSourcePreview) findViewById(R.id.preview);
 
         graphicOverlay = (GraphicOverlay<OcrGraphic>) findViewById(R.id.graphicOverlay);
@@ -189,10 +188,6 @@ public final class OcrCaptureActivity extends AppCompatActivity {
 
         gestureDetector = new GestureDetector(this, new CaptureGestureListener());
         scaleGestureDetector = new ScaleGestureDetector(this, new ScaleListener());
-
-//        Snackbar.make(graphicOverlay, "Tap to Speak. Pinch/Stretch to zoom",
-//                Snackbar.LENGTH_INDEFINITE)
-//                .show();
 
         // Set up the Text To Speech engine.
         TextToSpeech.OnInitListener listener =
@@ -254,22 +249,13 @@ public final class OcrCaptureActivity extends AppCompatActivity {
     @SuppressLint("InlinedApi")
     private void createCameraSource(boolean autoFocus, boolean useFlash) throws IOException {
         Context context = getApplicationContext();
-//        databaseHelper = new DatabaseHelper(this);
         // A text recognizer is created to find text.  An associated multi-processor instance
         // is set to receive the text recognition results, track the text, and maintain
         // graphics for each text block on screen.  The factory is used by the multi-processor to
         // create a separate tracker instance for each text block.
         TextRecognizer textRecognizer = new TextRecognizer.Builder(context).build();
 
-
-//        if (getIntent().getStringExtra("info").contains("Food")) {
-//            textRecognizer.setProcessor(new OcrDetectorProcessor(graphicOverlay, returning(),/* databaseHelper,*/ returningFoodInterMap(), this, recyclerView, usersDrugs, "Food"));
-//
-//        } else {
-//            textRecognizer.setProcessor(new OcrDetectorProcessor(graphicOverlay, returning(),/* databaseHelper,*/ returningDrugsInterMap(), this, recyclerView, usersDrugs, "Drug"));
-//        }
-        textRecognizer.setProcessor(new OcrDetectorProcessor(graphicOverlay, drugs,/* databaseHelper,*/ map, this, recyclerView, usersDrugs, getIntent().getStringExtra("info")));
-
+        textRecognizer.setProcessor(new OcrDetectorProcessor(graphicOverlay, drugs, map, this, recyclerView, usersDrugs, getIntent().getStringExtra("info")));
 
         if (!textRecognizer.isOperational()) {
             // Note: The first time that an app using a Vision API is installed on a
@@ -312,11 +298,7 @@ public final class OcrCaptureActivity extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
-//        try {
-//            createCameraSource(true, false);
-//        } catch (IOException e) {
-//            e.printStackTrace();
-//        }
+
         startCameraSource();
     }
 
@@ -385,11 +367,7 @@ public final class OcrCaptureActivity extends AppCompatActivity {
         Log.e(TAG, "Permission not granted: results len = " + grantResults.length +
                 " Result code = " + (grantResults.length > 0 ? grantResults[0] : "(empty)"));
 
-        DialogInterface.OnClickListener listener = new DialogInterface.OnClickListener() {
-            public void onClick(DialogInterface dialog, int id) {
-                finish();
-            }
-        };
+        DialogInterface.OnClickListener listener = (dialog, id) -> finish();
 
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.setTitle("Multitracker sample")
@@ -517,6 +495,10 @@ public final class OcrCaptureActivity extends AppCompatActivity {
 
     @Override
     public void onBackPressed() {
-        startActivity(new Intent(OcrCaptureActivity.this, StartActivity.class));
+        if (usersDrugs == null) {
+            startActivity(new Intent(OcrCaptureActivity.this, StartActivity.class));
+        } else {
+            startActivity(new Intent(OcrCaptureActivity.this, ProfileActivity.class));
+        }
     }
 }
