@@ -98,6 +98,9 @@ public final class OcrCaptureActivity extends AppCompatActivity {
     // A TextToSpeech engine for speaking a String value.
     private TextToSpeech tts;
 
+    // Used to determine whether the text-to-speech should execute.
+    public static boolean shouldSpeak = true;
+
 
     /**
      * Initializes the UI and creates the detector pipeline.
@@ -172,6 +175,17 @@ public final class OcrCaptureActivity extends AppCompatActivity {
         boolean autoFocus = true;
         boolean useFlash = false;
 
+        // Set up the Text To Speech engine.
+        TextToSpeech.OnInitListener listener =
+                status -> {
+                    if (status == TextToSpeech.SUCCESS) {
+                        Log.d("OnInitListener", "Text to speech engine started successfully.");
+                        tts.setLanguage(Locale.US);
+                    } else {
+                        Log.d("OnInitListener", "Error starting the text to speech engine.");
+                    }
+                };
+        tts = new TextToSpeech(this.getApplicationContext(), listener);
 
         // Check for the camera permission before accessing the camera.  If the
         // permission is not granted yet, request permission.
@@ -188,18 +202,6 @@ public final class OcrCaptureActivity extends AppCompatActivity {
 
         gestureDetector = new GestureDetector(this, new CaptureGestureListener());
         scaleGestureDetector = new ScaleGestureDetector(this, new ScaleListener());
-
-        // Set up the Text To Speech engine.
-        TextToSpeech.OnInitListener listener =
-                status -> {
-                    if (status == TextToSpeech.SUCCESS) {
-                        Log.d("OnInitListener", "Text to speech engine started successfully.");
-                        tts.setLanguage(Locale.US);
-                    } else {
-                        Log.d("OnInitListener", "Error starting the text to speech engine.");
-                    }
-                };
-        tts = new TextToSpeech(this.getApplicationContext(), listener);
     }
 
     /**
@@ -255,7 +257,7 @@ public final class OcrCaptureActivity extends AppCompatActivity {
         // create a separate tracker instance for each text block.
         TextRecognizer textRecognizer = new TextRecognizer.Builder(context).build();
 
-        textRecognizer.setProcessor(new OcrDetectorProcessor(graphicOverlay, drugs, map, this, recyclerView, usersDrugs, getIntent().getStringExtra("info")));
+        textRecognizer.setProcessor(new OcrDetectorProcessor(graphicOverlay, drugs, map, this, recyclerView, usersDrugs, getIntent().getStringExtra("info"), this.tts));
 
         if (!textRecognizer.isOperational()) {
             // Note: The first time that an app using a Vision API is installed on a
@@ -300,6 +302,7 @@ public final class OcrCaptureActivity extends AppCompatActivity {
         super.onResume();
 
         startCameraSource();
+        shouldSpeak = true;
     }
 
     /**
@@ -310,6 +313,11 @@ public final class OcrCaptureActivity extends AppCompatActivity {
         super.onPause();
         if (preview != null) {
             preview.stop();
+        }
+
+        if (this.tts != null) {
+            this.tts.stop();
+            this.tts.shutdown();
         }
     }
 
@@ -322,6 +330,11 @@ public final class OcrCaptureActivity extends AppCompatActivity {
         super.onDestroy();
         if (preview != null) {
             preview.release();
+        }
+
+        if (this.tts != null) {
+            this.tts.stop();
+            this.tts.shutdown();
         }
     }
 

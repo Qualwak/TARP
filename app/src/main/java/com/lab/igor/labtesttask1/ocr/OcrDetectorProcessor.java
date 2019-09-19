@@ -16,6 +16,7 @@
 package com.lab.igor.labtesttask1.ocr;
 
 import android.os.Handler;
+import android.speech.tts.TextToSpeech;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -45,8 +46,9 @@ public class OcrDetectorProcessor implements Detector.Processor<TextBlock> {
     private Map<String, String> mapDrugs;
     private DetectedDrugsAdapter adapter;
     private String whereToGo;
+    private TextToSpeech tts;
 
-    public OcrDetectorProcessor(GraphicOverlay<OcrGraphic> ocrGraphicOverlay, String[] strings,/* DatabaseHelper databaseHelper,*/ Map<String, String> mapDrugs, OcrCaptureActivity ocrCaptureActivity, RecyclerView recyclerView, ArrayList<String> usersDrugs, String whereToGo) {
+    public OcrDetectorProcessor(GraphicOverlay<OcrGraphic> ocrGraphicOverlay, String[] strings,/* DatabaseHelper databaseHelper,*/ Map<String, String> mapDrugs, OcrCaptureActivity ocrCaptureActivity, RecyclerView recyclerView, ArrayList<String> usersDrugs, String whereToGo, TextToSpeech tts) {
         this.graphicOverlay = ocrGraphicOverlay;
         this.drugStrings = strings;
         this.mapDrugs = mapDrugs;
@@ -54,6 +56,7 @@ public class OcrDetectorProcessor implements Detector.Processor<TextBlock> {
         this.recyclerView = recyclerView;
         this.usersDrugs = usersDrugs;
         this.whereToGo = whereToGo;
+        this.tts = tts;
     }
 
     /**
@@ -91,7 +94,7 @@ public class OcrDetectorProcessor implements Detector.Processor<TextBlock> {
                 Handler handler = new Handler(ocrCaptureActivity.getMainLooper());
                 handler.post(() -> {
                     recyclerView.setLayoutManager(new LinearLayoutManager(ocrCaptureActivity));
-                    adapter = new DetectedDrugsAdapter(ocrCaptureActivity, drugsCamera, usersDrugs, whereToGo);
+                    adapter = new DetectedDrugsAdapter(ocrCaptureActivity, drugsCamera, usersDrugs, whereToGo, this.tts);
                     recyclerView.setAdapter(adapter);
                 });
                 Log.d("OcrDetectorProcessor", "Text detected! " + item.getValue());
