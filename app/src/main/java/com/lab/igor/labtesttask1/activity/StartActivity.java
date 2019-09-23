@@ -12,6 +12,7 @@ import android.widget.Button;
 import android.widget.Toast;
 
 import com.lab.igor.labtesttask1.AppPreLoadNew;
+import com.lab.igor.labtesttask1.HomeActivity;
 import com.lab.igor.labtesttask1.R;
 
 @RequiresApi(api = Build.VERSION_CODES.N)
@@ -89,9 +90,7 @@ public class StartActivity extends AppCompatActivity implements View.OnClickList
 
     @Override
     public void onBackPressed() {
-        Intent intent = new Intent(Intent.ACTION_MAIN);
-        intent.addCategory(Intent.CATEGORY_HOME);
-        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        Intent intent = new Intent(this, HomeActivity.class);
         startActivity(intent);
     }
 
