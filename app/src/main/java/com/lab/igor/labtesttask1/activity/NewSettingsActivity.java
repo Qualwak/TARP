@@ -36,6 +36,6 @@ public class NewSettingsActivity extends AppCompatActivity {
 
     @Override
     public void onBackPressed() {
-        startActivity(new Intent(NewSettingsActivity.this, StartActivity.class));
+        startActivity(new Intent(NewSettingsActivity.this, HomeActivity.class));
     }
 }

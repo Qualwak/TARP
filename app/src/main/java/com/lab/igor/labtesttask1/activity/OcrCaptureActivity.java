@@ -161,7 +161,6 @@ public final class OcrCaptureActivity extends AppCompatActivity {
         } else {
             map = AppPreLoadNew.getFooDrugInters();
         }
-
         List<String> help = AppPreLoadNew.getFooDrugs();
         drugs = help.toArray(new String[help.size()]);
 

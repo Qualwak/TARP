@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".HomeActivity">
+    tools:context=".activity.HomeActivity">
 
     <RelativeLayout
         android:layout_width="match_parent"
@@ -53,16 +53,33 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="#e55353"
-            android:orientation="horizontal">
+            android:orientation="horizontal"
+            android:gravity="center">
 
             <ImageView
                 android:id="@+id/logo"
                 android:layout_width="280dp"
                 android:layout_height="200dp"
-                android:layout_gravity="center"
                 android:scaleType="centerInside"
-                app:srcCompat="@drawable/logo_3_new"
-                android:contentDescription="TODO" />
+                app:srcCompat="@drawable/logo_3_new"/>
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/layout_settings"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/layout_generalized"
+            android:layout_centerHorizontal="true"
+            android:layout_alignParentBottom="true">
+
+            <Button
+                android:layout_width="42dp"
+                android:layout_height="42dp"
+                android:background="@drawable/settings_new_last_last"
+                android:layout_gravity="center_vertical"
+                android:id="@+id/settings"
+                android:onClick="onSettings"/>
+
         </LinearLayout>
     </RelativeLayout>
 </android.support.constraint.ConstraintLayout>

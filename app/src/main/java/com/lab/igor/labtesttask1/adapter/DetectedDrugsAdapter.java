@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.graphics.Color;
 import android.speech.tts.TextToSpeech;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,9 +15,11 @@ import android.widget.TextView;
 
 import com.lab.igor.labtesttask1.activity.FoodInteractionsActivity;
 import com.lab.igor.labtesttask1.activity.DrugInteractionsActivity;
+import com.lab.igor.labtesttask1.activity.HomeActivity;
 import com.lab.igor.labtesttask1.activity.OcrCaptureActivity;
 import com.lab.igor.labtesttask1.R;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class DetectedDrugsAdapter extends RecyclerView.Adapter<DetectedDrugsAdapter.ViewHolder> {
@@ -48,48 +51,96 @@ public class DetectedDrugsAdapter extends RecyclerView.Adapter<DetectedDrugsAdap
     @SuppressLint("ResourceAsColor")
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
-        if (whereToGo.contains("Food")) {
-            final String animal = mData.get(position);
-            holder.myTextView.setText(animal);
+        if (!HomeActivity.personalizedUse) {
+            if (whereToGo.contains("Food")) {
+                final String animal = mData.get(position);
+                holder.myTextView.setText(animal);
 
-            if (OcrCaptureActivity.shouldSpeak) {
-                this.speak(animal);
-                OcrCaptureActivity.shouldSpeak = false;
-            }
-
-            String[] forSplit = animal.split(" has food interaction");
-            if (mUsersDrugs != null && mUsersDrugs.contains(forSplit[0])) {
-                holder.myTextView.setTextColor(Color.parseColor("#29a53e"));
-            }
-            holder.button.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    Intent intent3 = new Intent(view.getContext(), FoodInteractionsActivity.class);
-                    intent3.putExtra("text_view", animal);
-                    view.getContext().startActivity(intent3);
+                if (OcrCaptureActivity.shouldSpeak) {
+                    this.speak(animal);
+                    OcrCaptureActivity.shouldSpeak = false;
                 }
-            });
+
+                String[] forSplit = animal.split(" has food interaction");
+                if (mUsersDrugs != null && mUsersDrugs.contains(forSplit[0])) {
+                    holder.myTextView.setTextColor(Color.parseColor("#29a53e"));
+                }
+                holder.button.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        Intent intent3 = new Intent(view.getContext(), FoodInteractionsActivity.class);
+                        intent3.putExtra("text_view", animal);
+                        view.getContext().startActivity(intent3);
+                    }
+                });
+            } else {
+                final String animal = mData.get(position);
+                holder.myTextView.setText(animal);
+
+                if (OcrCaptureActivity.shouldSpeak) {
+                    this.speak(animal);
+                    OcrCaptureActivity.shouldSpeak = false;
+                }
+
+                String[] forSplit = animal.split(" interacts with");
+                if (mUsersDrugs != null && mUsersDrugs.contains(forSplit[0])) {
+                    holder.myTextView.setTextColor(Color.parseColor("#29a53e"));
+                }
+                holder.button.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        Intent intent3 = new Intent(view.getContext(), DrugInteractionsActivity.class);
+                        intent3.putExtra("text_view", animal);
+                        view.getContext().startActivity(intent3);
+                    }
+                });
+            }
         } else {
-            final String animal = mData.get(position);
-            holder.myTextView.setText(animal);
+            if (whereToGo.contains("Food")) {
+                final String animal = mData.get(position);
+                String[] forSplit = animal.split(" has food interaction");
+                if (mUsersDrugs != null && mUsersDrugs.contains(forSplit[0])) {
+                    holder.myTextView.setText(animal);
 
-            if (OcrCaptureActivity.shouldSpeak) {
-                this.speak(animal);
-                OcrCaptureActivity.shouldSpeak = false;
-            }
-
-            String[] forSplit = animal.split(" interacts with");
-            if (mUsersDrugs != null && mUsersDrugs.contains(forSplit[0])) {
-                holder.myTextView.setTextColor(Color.parseColor("#29a53e"));
-            }
-            holder.button.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    Intent intent3 = new Intent(view.getContext(), DrugInteractionsActivity.class);
-                    intent3.putExtra("text_view", animal);
-                    view.getContext().startActivity(intent3);
+                    if (OcrCaptureActivity.shouldSpeak) {
+                        this.speak(animal);
+                        OcrCaptureActivity.shouldSpeak = false;
+                    }
+                    holder.myTextView.setTextColor(Color.parseColor("#29a53e"));
                 }
-            });
+                holder.button.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        Intent intent3 = new Intent(view.getContext(), FoodInteractionsActivity.class);
+                        intent3.putExtra("text_view", animal);
+                        view.getContext().startActivity(intent3);
+                    }
+                });
+            } else {
+                final String animal = mData.get(position);
+                String[] forSplit = animal.split(" interacts with");
+                mUsersDrugs = new ArrayList<>();
+                mUsersDrugs.add("Ibuprofen");
+                if (mUsersDrugs != null && mUsersDrugs.contains(forSplit[0])) {
+                    holder.myTextView.setText(animal);
+
+                    if (OcrCaptureActivity.shouldSpeak) {
+                        this.speak(animal);
+                        OcrCaptureActivity.shouldSpeak = false;
+                    }
+                    holder.myTextView.setTextColor(Color.parseColor("#29a53e"));
+
+                    holder.button.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View view) {
+                            Intent intent3 = new Intent(view.getContext(), DrugInteractionsActivity.class);
+                            intent3.putExtra("text_view", animal);
+                            view.getContext().startActivity(intent3);
+                        }
+                    });
+                }
+
+            }
         }
     }
 

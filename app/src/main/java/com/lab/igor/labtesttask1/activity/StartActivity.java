@@ -12,7 +12,6 @@ import android.widget.Button;
 import android.widget.Toast;
 
 import com.lab.igor.labtesttask1.AppPreLoadNew;
-import com.lab.igor.labtesttask1.HomeActivity;
 import com.lab.igor.labtesttask1.R;
 
 @RequiresApi(api = Build.VERSION_CODES.N)
