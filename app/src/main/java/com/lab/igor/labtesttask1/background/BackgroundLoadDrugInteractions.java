@@ -19,6 +19,7 @@ import android.widget.TextView;
 import com.google.gson.Gson;
 import com.lab.igor.labtesttask1.AppPreLoadNew;
 import com.lab.igor.labtesttask1.activity.FoodInteractionsActivity;
+import com.lab.igor.labtesttask1.activity.HomeActivity;
 import com.lab.igor.labtesttask1.activity.WarningActivity;
 import com.lab.igor.labtesttask1.adapter.SearchDrugInteractionsAdapter;
 import com.lab.igor.labtesttask1.db.DatabaseHelperNew;
@@ -80,7 +81,12 @@ public class BackgroundLoadDrugInteractions extends AsyncTask<Void, DrugInteract
             String tableName = "drug_interactions INNER JOIN drugs on drug_interactions.drug1_id = drugs.id INNER JOIN drugs AS drugs2 ON drugs2.id = drug_interactions.drug2_id";
             qb.setTables(tableName);
 
-            cursor = qb.query(db, sqlSelect, "drugs.name LIKE ? OR drugs.synonyms LIKE ?", new String[] {"%"+drugName+"%", "%"+drugName+"%"}, null, null, null);
+            if (HomeActivity.personalizedUse) {
+                cursor = qb.query(db, sqlSelect, "drugs.name LIKE ? OR drugs.synonyms LIKE ?", new String[] {"%"+drugName+"%", "%"+drugName+"%"}, null, null, null, "5");
+            } else {
+                cursor = qb.query(db, sqlSelect, "drugs.name LIKE ? OR drugs.synonyms LIKE ?", new String[] {"%"+drugName+"%", "%"+drugName+"%"}, null, null, null);
+            }
+
 
             int i = 0;
             String description, nameOfDrugInteraction;

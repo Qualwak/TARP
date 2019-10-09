@@ -122,11 +122,12 @@ public class DetectedDrugsAdapter extends RecyclerView.Adapter<DetectedDrugsAdap
             if (whereToGo.contains("Food")) {
                 final String animal = mData.get(position);
                 String[] forSplit = animal.split(" has food interaction");
+                String textToSpeak = "We have found interactions with " + forSplit[0] + ". To view the top five interactions, click view more.";
                 if (mUsersDrugs != null && mUsersDrugs.contains(forSplit[0])) {
-                    holder.myTextView.setText(animal);
+                    holder.myTextView.setText(textToSpeak);
 
                     if (OcrCaptureActivity.shouldSpeak) {
-                        this.speak(animal);
+                        this.speak(textToSpeak);
                         OcrCaptureActivity.shouldSpeak = false;
                     }
                     holder.myTextView.setTextColor(Color.parseColor("#29a53e"));
@@ -142,13 +143,12 @@ public class DetectedDrugsAdapter extends RecyclerView.Adapter<DetectedDrugsAdap
             } else {
                 final String animal = mData.get(position);
                 String[] forSplit = animal.split(" interacts with");
-                //mUsersDrugs = new ArrayList<>();
-                //mUsersDrugs.add("Ibuprofen");
+                String textToSpeak = "We have found interactions with " + forSplit[0] + ". To view the top five interactions, click view more.";
                 if (mUsersDrugs != null && mUsersDrugs.contains(forSplit[0])) {
-                    holder.myTextView.setText(animal);
+                    holder.myTextView.setText(textToSpeak);
 
                     if (OcrCaptureActivity.shouldSpeak) {
-                        this.speak(animal);
+                        this.speak(textToSpeak);
                         OcrCaptureActivity.shouldSpeak = false;
                     }
                     holder.myTextView.setTextColor(Color.parseColor("#29a53e"));
@@ -176,7 +176,11 @@ public class DetectedDrugsAdapter extends RecyclerView.Adapter<DetectedDrugsAdap
     private void speak(String text) {
         this.tts.setPitch((float)1.0);
         this.tts.setSpeechRate((float)1.0);
-        this.tts.speak(text + ". If you'd like to learn more, click \"view more.\"", this.tts.QUEUE_ADD, null);
+        if (HomeActivity.personalizedUse) {
+            this.tts.speak(text, this.tts.QUEUE_ADD, null);
+        } else {
+            this.tts.speak(text + ". If you'd like to learn more, click \"view more.\"", this.tts.QUEUE_ADD, null);
+        }
     }
 
     // total number of rows
